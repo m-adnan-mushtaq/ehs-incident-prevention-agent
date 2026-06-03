@@ -1,0 +1,72 @@
+services:
+  db:
+    image: pgvector/pgvector:pg17
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: ${POSTGRESQL_USERNAME}
+      POSTGRES_PASSWORD: ${POSTGRESQL_PASSWORD}
+      POSTGRES_DB: ${POSTGRESQL_DATABASE}
+    ports:
+      - "${POSTGRESQL_PORT:-5433}:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - app-network
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U ${POSTGRESQL_USERNAME} -d ${POSTGRESQL_DATABASE}",
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  smtp:
+    image: mailhog/mailhog:latest
+    container_name: smtp
+    restart: always
+    ports:
+      - 1025:1025
+      - 8025:8025
+    networks:
+      - app-network
+
+  minio:
+    image: quay.io/minio/minio
+    container_name: minio
+    restart: unless-stopped
+
+    ports:
+      - "9000:9000" # S3 API
+      - "9001:9001" # Web Console
+
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+
+    volumes:
+      - ./minio-data:/data
+
+    command: server /data --console-address ":9001"
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    networks:
+      - app-network
+    volumes:
+      - redis-data:/data
+
+volumes:
+  db-data:
+  minio-data:
+  redis-data:
+
+networks:
+  app-network:
+    driver: bridge

@@ -1,0 +1,5 @@
+ADMIN = "admin"
+SME = "sme"
+FIELD_WORKER = "field_worker"
+
+MANAGEABLE_ROLE_NAMES = {SME, FIELD_WORKER}

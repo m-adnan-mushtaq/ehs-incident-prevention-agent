@@ -1,0 +1,228 @@
+---
+alwaysApply: false
+---
+
+# Backend Architecture Rules
+
+## Project Style
+
+Follow the existing modular architecture.
+
+Each module should keep its own:
+
+- routes
+- schemas
+- models
+- services
+- constants/enums if needed
+
+Do not create messy cross-module logic inside routes.
+
+## Routes
+
+Routes must stay thin.
+
+Routes should only:
+
+- receive request data
+- apply request validation
+- apply authorization dependency
+- call service function
+- return `format_response(...)`
+
+Do not write database queries inside route files.
+
+Use existing style:
+
+```python
+@router.get("/")
+@catch_errors
+async def list_items(
+    query: Annotated[PaginationParams, Query()],
+    db: Session = Depends(get_db),
+    current_user: User = Depends(authorize(Role.ADMIN.value)),
+):
+    result = await service_function(query, current_user, db)
+    return format_response(result, status.HTTP_200_OK)
+```
+
+## Authorization
+
+Do not use global authorization middleware.
+
+Use `authorize()` directly on routes where needed.
+
+Examples:
+
+```python
+current_user: User = Depends(authorize())
+```
+
+```python
+current_user: User = Depends(authorize(Role.ADMIN.value))
+```
+
+Use admin authorization only where admin access is required.
+
+## Services
+
+All database queries must live inside dedicated service files.
+
+Routes must not contain query logic.
+
+Services can call other services when needed.
+
+Keep business logic inside services, not routes.
+
+Example:
+
+```python
+async def get_users(params, current_user, db, role_id=None):
+    query = join_user_query().filter(
+        User.id != current_user.id,
+        User.tenant_id == current_user.tenant_id,
+    )
+
+    if role_id:
+        query = query.filter(User.role_id == role_id)
+
+    return await paginate_query(db, query, params, [User.name, User.email])
+```
+
+## Queries
+
+Use SQLAlchemy async style.
+
+Use reusable query builder functions when useful.
+
+Example:
+
+```python
+def join_user_query():
+    return (
+        select(User)
+        .options(
+            load_only(
+                User.id,
+                User.name,
+                User.email,
+                User.role_id,
+                User.is_active,
+                User.last_login_at,
+                User.is_verified,
+                User.created_at,
+                User.updated_at,
+            ),
+            selectinload(User.role),
+        )
+    )
+```
+
+Use existing pagination helper:
+
+```python
+paginate_query(db, query, params, searchable_columns)
+```
+
+Do not create separate pagination logic unless required.
+
+## Pydantic
+
+Use Pydantic mainly for request validation.
+
+Do not create long, messy response schemas unless specifically needed.
+
+Avoid excessive query/mutation schema files.
+
+Keep schemas simple.
+
+## Responses
+
+Use existing response helper:
+
+```python
+return format_response(result, status.HTTP_200_OK)
+```
+
+Do not manually build inconsistent response formats.
+
+Before returning users, never expose password fields.
+
+Example:
+
+```python
+db_user.password = None
+```
+
+## Error Handling
+
+Use existing `catch_errors` decorator.
+
+Use `HTTPException` for clear client errors.
+
+Example:
+
+```python
+raise HTTPException(
+    status_code=status.HTTP_404_NOT_FOUND,
+    detail="User not found"
+)
+```
+
+## Tenant Safety
+
+For tenant-owned data, always filter by:
+
+```python
+User.tenant_id == current_user.tenant_id
+```
+
+Never allow cross-tenant access.
+
+Admin can manage only users inside their own tenant.
+
+## User Management Rules
+
+Admin can:
+
+- list users
+- view user detail
+- create users
+- update users
+- suspend users
+- activate users
+- delete users
+
+Admin must not:
+
+- delete themselves
+- suspend themselves
+- manage users from another tenant
+
+## Roles
+
+Use only these roles:
+
+```python
+admin
+sme
+field_worker
+```
+
+Update role constants and seeders to match these roles.
+
+Seeder must be idempotent.
+
+## Simplicity
+
+Keep code simple.
+
+Do not over-engineer.
+
+Do not add global middleware.
+
+Do not add response models unless needed.
+
+Do not implement future modules unless explicitly requested.
+
+When unsure, follow the existing project style.

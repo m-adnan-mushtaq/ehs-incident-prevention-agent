@@ -1,0 +1,58 @@
+---
+alwaysApply: false
+---
+
+---
+
+description: Client app architecture, folders, TanStack Query/Router, Shadcn, and patterns
+globs: client/\*_/_.{ts,tsx}
+alwaysApply: false
+
+---
+
+# Client — Architecture & Conventions
+
+## Feature-first layout
+
+- Primary logic lives in `src/features/{feature-name}/`.
+- Keep feature-only components, layouts, and sub-modules inside that feature folder.
+- New features must include: `index.tsx` (entry), `components/`, `hooks/` (e.g. `useColumns`).
+- Feature-specific layouts: `features/{name}/layout/`; global shells: `src/layout/`.
+
+## Shared vs global
+
+- `src/components/`: only truly global UI (Inputs, Buttons, Tables), grouped by category (e.g. `form/`).
+- `src/services/`: all API calls; return typed Axios/Fetch responses.
+
+## TypeScript
+
+- Interfaces in `src/types/` or colocated in features when feature-specific.
+- Prefix interfaces with `I` (e.g. `IUser`).
+- Arrow functional components; destructure props; for paginated pages use `PaginationWrapperProps<T>` where applicable.
+
+## Server state (TanStack Query)
+
+- Use for all async server data.
+- On mutation success: always `queryClient.invalidateQueries(...)`.
+- Centralize query keys in a `CACHE_KEYS` constant.
+
+## Client state
+
+- Zustand for global UI or complex shared logic; `useState` for simple local state.
+
+## UI & lists
+
+- **Shadcn/UI** for primitives — do not rebuild basic controls.
+- Lists: **DataTable** + TanStack Table utilities.
+- List pages: **`withPaginatedQuery`** — `export default withPaginatedQuery(PageName, { queryKey, queryFn })`.
+- Modals: **`useModal`** + **GenericDialog**; modal kinds via **MODAL_TYPE** enums.
+- Forms: **`handleSubmit`-style** props that return results for **toast** feedback.
+- Icons: **Lucide React** by default (e.g. `<Plus />`).
+
+## Routing
+
+- **TanStack Router** only; routes must stay type-safe.
+
+## Errors & feedback
+
+- Use **toast** for mutation success/failure and user-visible errors.
