@@ -21,6 +21,9 @@ from app.modules.knowledge.services.knowledge_service import (
 )
 from app.modules.user.models.user import User
 from app.utils.common import catch_errors, format_response
+from app.modules.ingestion.services.enqueue import (
+    enqueue_knowledge_object_ingestion,
+)
 
 knowledge_router = APIRouter(
     prefix="/knowledge",
@@ -106,9 +109,6 @@ async def update_knowledge_route(
     )
     await db.commit()
     if should_enqueue:
-        from app.modules.ingestion.services.enqueue import (
-            enqueue_knowledge_object_ingestion,
-        )
 
         enqueue_knowledge_object_ingestion(str(result.id))
     return format_response(result, status.HTTP_200_OK)

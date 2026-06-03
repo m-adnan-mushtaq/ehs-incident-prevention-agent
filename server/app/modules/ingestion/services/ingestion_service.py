@@ -24,6 +24,22 @@ async def archive_active_chunks(
     )
 
 
+async def archive_all_chunks_for_source(
+    db: AsyncSession,
+    source_type: str,
+    source_id: uuid.UUID,
+) -> None:
+    await db.execute(
+        update(KnowledgeChunk)
+        .where(
+            KnowledgeChunk.source_type == source_type,
+            KnowledgeChunk.source_id == source_id,
+            KnowledgeChunk.deleted_at.is_(None),
+        )
+        .values(status=CHUNK_STATUS_ARCHIVED)
+    )
+
+
 def resolve_source_scope(site_ids: list | None) -> str:
     if site_ids:
         return "site"

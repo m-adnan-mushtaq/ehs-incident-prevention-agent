@@ -63,6 +63,9 @@ class KnowledgeChunk(BaseTable, SoftDeleteMixin, TenantMixin):
     section_title: Mapped[str | None] = mapped_column(
         String(255), nullable=True)
 
+    document_title: Mapped[str | None] = mapped_column(
+        String(255), nullable=True)
+
     confidence_score: Mapped[Decimal | None] = mapped_column(
         Numeric(4, 3),
         nullable=True,

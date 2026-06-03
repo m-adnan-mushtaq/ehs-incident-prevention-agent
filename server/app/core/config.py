@@ -39,6 +39,9 @@ class Settings(BaseSettings):
     OPENROUTER_API_KEY: str
     OPENROUTER_MODEL: str = "openai/gpt-4o-mini"
     OPENROUTER_BASE_URL: str = "https://openrouter.ai/api/v1"
+    GEMINI_API_KEY: str | None = None
+    GOOGLE_API_KEY: str | None = None
+    GEMINI_VISION_MODEL: str = "gemini-1.5-flash"
 
     VOYAGE_API_KEY: str
     VOYAGE_EMBEDDING_MODEL: str = "voyage-3"

@@ -7,13 +7,7 @@ from sqlalchemy import engine_from_config, pool
 from app.core.config_loader import settings
 from app.db.database import Base
 
-from app.modules.jwt_token.models.token import Token
-from app.modules.user.models.user import User, Tenant
-from app.modules.role.models.role import Role
-from app.modules.sites.models.site import Site
-from app.modules.document.models.document import Document
-from app.modules.knowledge.models.knowledge_object import KnowledgeObject
-from app.modules.ingestion.models.knowledge_chunk import KnowledgeChunk
+import app.db.models  # noqa: F401
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 if str(PROJECT_ROOT) not in sys.path:

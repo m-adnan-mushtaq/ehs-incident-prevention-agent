@@ -31,6 +31,19 @@ async def _load_knowledge_object(
     return result.scalar_one_or_none()
 
 
+async def mark_knowledge_object_failed(
+    db: AsyncSession,
+    knowledge_object_id: str,
+    error: str,
+) -> None:
+    obj = await _load_knowledge_object(db, knowledge_object_id)
+    if not obj:
+        return
+    obj.status = KnowledgeStatus.APPROVED.value
+    obj.sme_notes = f"Ingestion failed: {error[:500]}"
+    await db.flush()
+
+
 async def ingest_knowledge_object(
     db: AsyncSession,
     knowledge_object_id: str,

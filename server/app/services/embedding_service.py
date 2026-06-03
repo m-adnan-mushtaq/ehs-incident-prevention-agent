@@ -9,21 +9,25 @@ class EmbeddingService:
     @classmethod
     def get_client(cls):
         if cls._client is None:
-
             cls._client = voyageai.Client(api_key=settings.VOYAGE_API_KEY)
         return cls._client
 
     @classmethod
-    def embed_text(cls, text: str) -> list[float]:
+    def embed_text(cls, text: str, input_type: str = "document") -> list[float]:
         text = (text or "").strip()
         if not text:
             raise ValueError("Cannot embed empty text")
         result = cls.get_client().embed(
             [text],
             model=settings.VOYAGE_EMBEDDING_MODEL,
-            input_type="document",
+            input_type=input_type,
+            output_dimension=cls.EMBEDDING_DIM,
         )
         return result.embeddings[0]
+
+    @classmethod
+    def embed_query(cls, text: str) -> list[float]:
+        return cls.embed_text(text, input_type="query")
 
     @classmethod
     def embed_texts(
@@ -40,7 +44,7 @@ class EmbeddingService:
                 batch,
                 model=settings.VOYAGE_EMBEDDING_MODEL,
                 input_type="document",
-                output_dimension=1024,
+                output_dimension=cls.EMBEDDING_DIM,
             )
             embeddings.extend(result.embeddings)
         return embeddings

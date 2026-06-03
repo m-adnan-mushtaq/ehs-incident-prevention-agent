@@ -25,7 +25,7 @@ class Site(BaseTable, SoftDeleteMixin, TenantMixin):
         "Document", secondary="document_sites", back_populates="sites"
     )
     # primary_documents = relationship("Document", back_populates="site")
-    # incidents = relationship("Incident", back_populates="site")
+    incidents = relationship("Incident", back_populates="site")
     # knowledge_objects = relationship("KnowledgeObject", back_populates="site")
     # knowledge_chunks = relationship("KnowledgeChunk", back_populates="site")
     # chat_sessions = relationship("ChatSession", back_populates="site")

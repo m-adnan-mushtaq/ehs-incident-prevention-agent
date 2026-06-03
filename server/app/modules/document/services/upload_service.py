@@ -41,9 +41,12 @@ async def save_upload_file_to_disk(file: UploadFile, destination_path: str) -> i
     return size
 
 
-def upload_file_to_s3(local_path: str, s3_key: str) -> str:
+def upload_file_to_s3(local_path: str, s3_key: str, file_type: str) -> str:
     client = get_s3_client()
-    client.upload_file(local_path, settings.AWS_S3_BUCKET_NAME, s3_key)
+    client.upload_file(local_path, settings.AWS_S3_BUCKET_NAME, s3_key,ExtraArgs={
+        "ContentType":file_type,
+        "ContentDisposition": "inline",
+    })
     return s3_key
 
 
@@ -59,7 +62,7 @@ async def handle_document_upload(file: UploadFile, tenant_id) -> dict:
     local_path, stored_filename = build_local_temp_path(original_name)
     file_size_bytes = await save_upload_file_to_disk(file, local_path)
     s3_key = build_s3_key(tenant_id, stored_filename)
-    file_url = upload_file_to_s3(local_path, s3_key)
+    file_url = upload_file_to_s3(local_path, s3_key, file.content_type)
     return {
         "file_name": original_name,
         "file_url": file_url,

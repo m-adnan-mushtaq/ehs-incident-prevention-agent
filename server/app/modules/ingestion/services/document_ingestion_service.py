@@ -80,6 +80,7 @@ async def ingest_document(
                 status=CHUNK_STATUS_ACTIVE,
                 page_number=item["start_page"],
                 section_title=None,
+                document_title=document.title,
                 celery_task_id=celery_task_id,
             )
         )

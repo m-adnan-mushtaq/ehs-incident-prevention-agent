@@ -42,6 +42,11 @@ class User(BaseTable, SoftDeleteMixin):
         back_populates="approved_by_user",
         foreign_keys="KnowledgeObject.approved_by",
     )
+    reported_incidents = relationship(
+        "Incident",
+        back_populates="reported_by_user",
+        foreign_keys="Incident.reported_by",
+    )
 
 
 class Tenant(BaseTable, SoftDeleteMixin):
@@ -54,3 +59,4 @@ class Tenant(BaseTable, SoftDeleteMixin):
 
     users = relationship("User", back_populates="tenant")
     sites = relationship("Site", back_populates="tenant")
+    incidents = relationship("Incident", back_populates="tenant")

@@ -10,6 +10,9 @@ from app.modules.sites.routes.site_router import site_router
 from app.modules.document.routes.document_router import document_router
 from app.modules.knowledge.routes.knowledge_router import knowledge_router
 from app.modules.ingestion.routes.ingestion_router import ingestion_router
+from app.modules.incident.routes.incident_router import incident_router
+from app.modules.chat.routes.chat_router import chat_router
+from app.realtime.socket_manager import socket_manager
 
 openapi_tags = [
     {"name": "Health Checks", "description": "Application health checks"},
@@ -20,12 +23,15 @@ openapi_tags = [
     {"name": "Documents", "description": "Document management"},
     {"name": "Knowledge", "description": "Knowledge object management"},
     {"name": "Ingestion", "description": "Embedding ingestion retries"},
+    {"name": "Incidents", "description": "Incident reporting and management"},
+    {"name": "Chat", "description": "Chat sessions and RAG assistant messaging"},
 ]
 
-app = FastAPI(title="SitenSight API", openapi_tags=openapi_tags)
+app = FastAPI(title="EHS API", openapi_tags=openapi_tags)
 
 if settings.BACKEND_CORS_ORIGINS:
-    origins = [o.strip() for o in settings.BACKEND_CORS_ORIGINS.split(",") if o.strip()]
+    origins = [o.strip()
+               for o in settings.BACKEND_CORS_ORIGINS.split(",") if o.strip()]
     if origins:
         app.add_middleware(
             CORSMiddleware,
@@ -43,6 +49,9 @@ app.include_router(site_router)
 app.include_router(document_router)
 app.include_router(knowledge_router)
 app.include_router(ingestion_router)
+app.include_router(incident_router)
+app.include_router(chat_router)
+app.mount("/socket.io/", socket_manager.app)
 
 
 @app.get("/health", tags=["Health Checks"])

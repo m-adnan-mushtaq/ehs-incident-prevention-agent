@@ -1,5 +1,6 @@
 from celery import Celery
 
+import app.db.models  # noqa: F401 — register ORM mappers for Celery workers
 from app.core.config_loader import settings
 
 celery_app = Celery(

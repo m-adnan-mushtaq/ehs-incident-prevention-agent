@@ -136,7 +136,8 @@ async def extract_knowledge_from_voice(file: UploadFile, current_user: User) -> 
         await _save_audio(file, local_path)
         transcript = await asyncio.to_thread(deepgram_service.transcribe_file, local_path)
         if not transcript:
-            raise HTTPException(status_code=400, detail="Could not transcribe audio.")
+            raise HTTPException(
+                status_code=400, detail="Could not transcribe audio.")
         return knowledge_extraction_agent.extract(transcript)
     except HTTPException:
         raise
@@ -165,18 +166,21 @@ async def get_knowledge_objects(
         if filters.status:
             query = query.where(KnowledgeObject.status == filters.status)
         if filters.source_type:
-            query = query.where(KnowledgeObject.source_type == filters.source_type)
+            query = query.where(
+                KnowledgeObject.source_type == filters.source_type)
         if filters.topic:
             query = query.where(KnowledgeObject.topic == filters.topic)
         if filters.task_type:
             query = query.where(KnowledgeObject.task_type == filters.task_type)
         if filters.risk_level:
-            query = query.where(KnowledgeObject.risk_level == filters.risk_level)
+            query = query.where(
+                KnowledgeObject.risk_level == filters.risk_level)
         if filters.site_id:
             site_uuid = uuid.UUID(str(filters.site_id))
             query = query.where(KnowledgeObject.site_ids.contains([site_uuid]))
         if filters.created_by and (_is_admin(current_user) or _is_sme(current_user)):
-            query = query.where(KnowledgeObject.created_by == filters.created_by)
+            query = query.where(
+                KnowledgeObject.created_by == filters.created_by)
     return await paginate_query(
         db,
         query,
@@ -218,7 +222,7 @@ async def create_knowledge_object(
         tenant_id=current_user.tenant_id,
         created_by=current_user.id,
         source_type=payload.source_type,
-        source_id=payload.source_id,
+        source_id=current_user.id,
         title=payload.title,
         site_ids=payload.site_ids,
         topic=payload.topic,
@@ -264,7 +268,8 @@ async def update_knowledge_object(
     )
     obj = result.scalar_one_or_none()
     if not obj:
-        raise HTTPException(status_code=404, detail="Knowledge object not found")
+        raise HTTPException(
+            status_code=404, detail="Knowledge object not found")
 
     old_status = obj.status
     update_data = payload.model_dump(exclude_unset=True)
@@ -321,7 +326,8 @@ async def delete_knowledge_object(
     )
     obj = result.scalar_one_or_none()
     if not obj:
-        raise HTTPException(status_code=404, detail="Knowledge object not found")
+        raise HTTPException(
+            status_code=404, detail="Knowledge object not found")
     if not _can_delete(current_user, obj):
         raise HTTPException(status_code=403, detail="Access forbidden")
 

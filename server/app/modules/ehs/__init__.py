@@ -1,1 +1,0 @@
-"""EHS domain module."""
