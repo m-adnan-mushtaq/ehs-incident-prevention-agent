@@ -21,27 +21,27 @@ export const AppSidebar = ({
 
   return (
     <Sidebar
-      className="border-r border-slate-800/80 bg-[#0a1020] text-slate-200"
+      className="border-r border-slate-200 bg-white text-slate-700"
       collapsible="icon"
       {...props}
     >
-      <SidebarHeader className="border-b border-slate-800/60 bg-[#0a1020] px-4 py-5">
+      <SidebarHeader className="border-b border-slate-200 bg-white px-4 py-5">
         <Link to={ROUTE_PATHS.app.root} className="flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-md bg-sky-600/20 text-sky-400">
+          <div className="flex h-9 w-9 items-center justify-center rounded-md bg-blue-50 text-blue-700">
             <Shield className="h-5 w-5" />
           </div>
           <div className="flex flex-col group-data-[collapsible=icon]:hidden">
-            <span className="text-sm font-semibold text-slate-100">
+            <span className="text-sm font-semibold text-slate-950">
               Safety Operations
             </span>
             <span className="text-xs text-slate-500">EHS Platform</span>
           </div>
         </Link>
       </SidebarHeader>
-      <SidebarContent className="bg-[#0a1020]">
+      <SidebarContent className="bg-white">
         <NavMain showLabel items={navLinks} />
       </SidebarContent>
-      <SidebarFooter className="bg-[#0a1020]" />
+      <SidebarFooter className="bg-white" />
       <SidebarRail />
     </Sidebar>
   );

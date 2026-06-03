@@ -84,13 +84,13 @@ export const VoiceKnowledgeForm = ({
   return (
     <Form {...form}>
       <form id={formId} onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        <p className="rounded-md border border-slate-800 bg-slate-900/40 px-4 py-3 text-sm text-slate-400">
+        <p className="rounded-md border border-blue-100 bg-blue-50 px-4 py-3 text-sm text-blue-800">
           {saveStatusHint}
         </p>
 
-        <Card className="border-slate-800 bg-[#0c1424]">
+        <Card className="border-slate-200 bg-white shadow-sm">
           <CardHeader className="pb-2">
-            <CardTitle className="text-base text-slate-100">Overview</CardTitle>
+            <CardTitle className="text-base text-slate-950">Overview</CardTitle>
           </CardHeader>
           <CardContent className="grid gap-4 md:grid-cols-2">
             <ControlledInput name="title" control={form.control} label="Title" disabled={disabled} />
@@ -123,7 +123,7 @@ export const VoiceKnowledgeForm = ({
             <div className="flex items-end gap-3">
               {riskLevel && <VoiceKnowledgeRiskBadge risk={riskLevel} />}
               {confidenceScore != null && (
-                <span className="text-sm text-slate-400">
+                <span className="text-sm text-slate-500">
                   Confidence: {Math.round(confidenceScore * 100)}%
                 </span>
               )}
@@ -131,9 +131,9 @@ export const VoiceKnowledgeForm = ({
           </CardContent>
         </Card>
 
-        <Card className="border-slate-800 bg-[#0c1424]">
+        <Card className="border-slate-200 bg-white shadow-sm">
           <CardHeader className="pb-2">
-            <CardTitle className="text-base text-slate-100">Safety analysis</CardTitle>
+            <CardTitle className="text-base text-slate-950">Safety analysis</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             {(["problem", "root_cause", "recommended_action", "lesson_learned", "safety_warning"] as const).map(
@@ -144,7 +144,7 @@ export const VoiceKnowledgeForm = ({
                   name={field}
                   render={({ field: f }) => (
                     <FormItem>
-                      <FormLabel className="capitalize text-slate-300">
+                      <FormLabel className="capitalize text-slate-700">
                         {field.replace(/_/g, " ")}
                       </FormLabel>
                       <FormControl>
@@ -152,7 +152,7 @@ export const VoiceKnowledgeForm = ({
                           {...f}
                           disabled={disabled}
                           rows={3}
-                          className="border-slate-700 bg-slate-900/50 text-slate-100"
+                          className="border-slate-200 bg-white text-slate-950"
                         />
                       </FormControl>
                       <FormMessage />
@@ -164,9 +164,9 @@ export const VoiceKnowledgeForm = ({
           </CardContent>
         </Card>
 
-        <Card className="border-slate-800 bg-[#0c1424]">
+        <Card className="border-slate-200 bg-white shadow-sm">
           <CardHeader className="pb-2">
-            <CardTitle className="text-base text-slate-100">Controls</CardTitle>
+            <CardTitle className="text-base text-slate-950">Controls</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <FormField
@@ -198,9 +198,9 @@ export const VoiceKnowledgeForm = ({
           </CardContent>
         </Card>
 
-        <Card className="border-slate-800 bg-[#0c1424]">
+        <Card className="border-slate-200 bg-white shadow-sm">
           <CardHeader className="pb-2">
-            <CardTitle className="text-base text-slate-100">Original transcript</CardTitle>
+            <CardTitle className="text-base text-slate-950">Original transcript</CardTitle>
           </CardHeader>
           <CardContent>
             <FormField
@@ -213,7 +213,7 @@ export const VoiceKnowledgeForm = ({
                       {...field}
                       disabled={disabled}
                       rows={6}
-                      className="border-slate-700 bg-slate-900/50 text-slate-200 font-mono text-sm"
+                      className="border-slate-200 bg-slate-50 font-mono text-sm text-slate-800"
                     />
                   </FormControl>
                   <FormMessage />

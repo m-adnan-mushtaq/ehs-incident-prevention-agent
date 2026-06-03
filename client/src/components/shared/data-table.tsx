@@ -66,6 +66,8 @@ export interface DataTableWrapperProps<TData> {
   loading?: boolean;
   skipSorting?: boolean;
   emptyPlaceholder?: string;
+  search?: string;
+  onSearch?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 interface DataTableProps<TData, TValue> extends DataTableWrapperProps<TData> {
@@ -86,6 +88,8 @@ function DataTable<TData, TValue>({
   loading,
   skipSorting = false,
   emptyPlaceholder = "No records found",
+  search = "",
+  onSearch,
 }: DataTableProps<TData, TValue>) {
   const [expanded, setExpanded] = React.useState<ExpandedState>({});
   const table = useReactTable({
@@ -148,13 +152,15 @@ function DataTable<TData, TValue>({
   };
 
   return (
-    <div className="w-full relative max-w-screen-xl overflow-auto ">
+    <div className="relative w-full overflow-auto">
       <div className="flex items-center justify-between">
         <div className="max-w-80 p-1">
           <ThemeInput
             startIcon={Search}
-            className="rounded-sm border-secondary bg-white"
+            className="rounded-md border-slate-200 bg-white"
             placeholder="Search..."
+            value={search}
+            onChange={onSearch}
           />
         </div>
         <DataTableViewOptions table={table} />
@@ -178,7 +184,7 @@ function DataTable<TData, TValue>({
                 return (
                   <TableHead
                     key={header.id}
-                    className={cn("cursor-pointer select-none bg-white")}
+                    className={cn("cursor-pointer select-none bg-white text-slate-600")}
                     onClick={
                       header.column.getCanSort()
                         ? header.column.getToggleSortingHandler()
@@ -201,7 +207,7 @@ function DataTable<TData, TValue>({
                               <ChevronUp
                                 className={`h-3 w-3 ${
                                   header.column.getIsSorted() === "asc"
-                                    ? "text-sky-400"
+                                    ? "text-blue-600"
                                     : "text-slate-600"
                                 }`}
                               />
@@ -214,7 +220,7 @@ function DataTable<TData, TValue>({
                               <ChevronDown
                                 className={`h-3 w-3 ${
                                   header.column.getIsSorted() === "desc"
-                                    ? "text-sky-400"
+                                    ? "text-blue-600"
                                     : "text-slate-600"
                                 }`}
                               />
@@ -258,7 +264,7 @@ function DataTable<TData, TValue>({
                             : {}),
                         }}
                         className={cn(
-                          "bg-white mb-2",
+                          "mb-2 bg-white text-slate-700",
 
                           cellIndex === 0
                             ? "rounded-l-lg"
@@ -280,7 +286,7 @@ function DataTable<TData, TValue>({
           ) : (
             <TableRow>
               <TableCell colSpan={columns.length} className="text-center">
-                <div className="flex items-center justify-center text-gray-400 flex-col my-4">
+                <div className="my-4 flex flex-col items-center justify-center text-slate-400">
                   <Inbox size={40} className=" text-gray-300" />
                   <p className="font-semibold text-lg mt-2">
                     {loading ? "Loading..." : emptyPlaceholder}
@@ -301,7 +307,7 @@ function DataTable<TData, TValue>({
           )}
         >
           <div className="flex items-center space-x-2">
-            <p className="text-sm font-medium">Rows per page</p>
+            <p className="text-sm font-medium text-slate-600">Rows per page</p>
             <Select
               value={`${pagination.pageSize}`}
               onValueChange={(value) => {
@@ -323,7 +329,7 @@ function DataTable<TData, TValue>({
               </SelectContent>
             </Select>
           </div>
-          <Pagination className="max-w-fit mx-0 text-darkSlate">
+          <Pagination className="mx-0 max-w-fit text-slate-700">
             <PaginationContent>
               <PaginationItem aria-disabled={pagination.pageIndex === 0}>
                 <PaginationPrevious
@@ -345,7 +351,7 @@ function DataTable<TData, TValue>({
                       className={`w-8 h-8 shadow-none rounded hover:text-white flex items-center justify-center ${
                         pagination.pageIndex === page - 1
                           ? "bg-primary text-white"
-                          : "bg-white text-darkSlate"
+                          : "bg-white text-slate-700"
                       }`}
                       onClick={() =>
                         setPagination((prev) => ({

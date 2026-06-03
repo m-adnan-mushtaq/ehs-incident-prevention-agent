@@ -32,7 +32,7 @@ const AdminSignupPage = () => {
   return (
     <>
       <CardHeader className="px-0 pb-2 text-center">
-        <CardTitle className="text-xl text-slate-100">
+        <CardTitle className="text-xl text-slate-950">
           Organization onboarding
         </CardTitle>
         <CardDescription className="text-slate-500">
@@ -49,7 +49,7 @@ const AdminSignupPage = () => {
           Already have an account?{" "}
           <Link
             to="/auth/login"
-            className="font-medium text-sky-400 hover:text-sky-300"
+            className="font-medium text-blue-700 hover:text-blue-800"
           >
             Sign in
           </Link>

@@ -19,12 +19,12 @@ const UserAvatar = ({
   return (
     <Avatar
       className={cn(
-        "border border-slate-600 bg-slate-800 text-slate-200",
+        "border border-blue-100 bg-blue-50 text-blue-700",
         size
       )}
     >
       <AvatarImage alt={user?.name} />
-      <AvatarFallback className="rounded-full bg-slate-700 text-xs">
+      <AvatarFallback className="rounded-full bg-blue-50 text-xs">
         {initials || "?"}
       </AvatarFallback>
     </Avatar>

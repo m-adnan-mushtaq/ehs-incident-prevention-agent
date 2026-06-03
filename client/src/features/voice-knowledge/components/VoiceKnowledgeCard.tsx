@@ -25,10 +25,10 @@ export const VoiceKnowledgeCard = ({ note, onView }: Props) => {
       : null;
 
   return (
-    <Card className="border-slate-800 bg-[#0c1424] transition-colors hover:border-slate-700">
+    <Card className="border-slate-200 bg-white shadow-sm transition-colors hover:border-slate-300">
       <CardHeader className="space-y-3 pb-2">
         <div className="flex flex-wrap items-start justify-between gap-2">
-          <CardTitle className="text-base font-semibold text-slate-100 line-clamp-2">
+          <CardTitle className="line-clamp-2 text-base font-semibold text-slate-950">
             {note.title}
           </CardTitle>
           <div className="flex flex-wrap gap-2">
@@ -44,12 +44,11 @@ export const VoiceKnowledgeCard = ({ note, onView }: Props) => {
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
-        <p className="text-sm text-slate-400 line-clamp-3">{excerpt(note)}</p>
+        <p className="line-clamp-3 text-sm text-slate-600">{excerpt(note)}</p>
         <Button
           type="button"
           variant="outline"
           size="sm"
-          className="border-slate-700 text-slate-200"
           onClick={() => onView(note)}
         >
           <Eye className="h-4 w-4" />

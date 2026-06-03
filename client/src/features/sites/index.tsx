@@ -25,6 +25,8 @@ const SitesPage = ({
   sortModel,
   setPaginationModel,
   totalRecords,
+  handleSearch,
+  search,
 }: PaginationWrapperProps<ISite>) => {
   const { modalState, modalStateHandler } = useModal();
   const [selectedSite, setSelectedSite] = useState<ISite>();
@@ -46,16 +48,15 @@ const SitesPage = ({
   const dialogOpen = modalState.create || modalState.edit;
 
   return (
-    <Container className="text-slate-200">
+    <Container className="pb-10 text-slate-900">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-xl font-semibold text-slate-100">Sites</h2>
+          <h2 className="text-2xl font-semibold text-slate-950">Sites</h2>
           <p className="text-sm text-slate-500">
             Operational locations for field teams and site-scoped documents.
           </p>
         </div>
         <Button
-          className="bg-sky-600 hover:bg-sky-500"
           onClick={() => {
             setSelectedSite(undefined);
             modalStateHandler(MODAL_TYPE.CREATE, true);
@@ -64,18 +65,22 @@ const SitesPage = ({
           <Plus className="h-4 w-4" /> Add site
         </Button>
       </div>
-      <DataTable
-        columns={columns as never}
-        data={data}
-        total={totalRecords}
-        sorting={sortModel}
-        setSorting={setSortModel}
-        loading={isLoading}
-        pagination={paginationModel}
-        setPagination={setPaginationModel}
-        visiblePagination
-        emptyPlaceholder="No sites configured yet."
-      />
+      <div className="rounded-lg border border-slate-200 bg-white p-3 shadow-sm">
+        <DataTable
+          columns={columns as never}
+          data={data}
+          total={totalRecords}
+          sorting={sortModel}
+          setSorting={setSortModel}
+          loading={isLoading}
+          pagination={paginationModel}
+          setPagination={setPaginationModel}
+          visiblePagination
+          emptyPlaceholder="No sites configured yet."
+          search={search}
+          onSearch={handleSearch}
+        />
+      </div>
       <SiteDialog
         open={dialogOpen}
         site={selectedSite}

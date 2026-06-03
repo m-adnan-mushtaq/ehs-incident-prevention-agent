@@ -56,3 +56,7 @@ export interface ICreateKnowledgeObjectPayload {
   sme_notes?: string;
   status: KnowledgeStatus;
 }
+
+export type IUpdateKnowledgeObjectPayload = Partial<ICreateKnowledgeObjectPayload> & {
+  rejection_reason?: string;
+};

@@ -26,6 +26,13 @@ export const getPaginatedDocuments = async (
   return adaptPaginated(unwrapData(response));
 };
 
+export const getDocumentById = async (id: string) => {
+  const response = await apiInstance.get<IApiEnvelope<IDocument>>(
+    apiRoutes.DOCUMENTS.byId(id)
+  );
+  return unwrapData(response);
+};
+
 export const uploadDocument = async (payload: IUploadDocumentPayload) => {
   const formData = new FormData();
   formData.append("file", payload.file);

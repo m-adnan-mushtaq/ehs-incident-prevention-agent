@@ -3,14 +3,14 @@ import { cn } from "@/lib/utils";
 import { toTitleCase } from "@/helpers/common";
 
 const statusStyles: Record<string, string> = {
-  active: "bg-emerald-500/15 text-emerald-200 border-emerald-500/30",
-  uploaded: "bg-sky-500/15 text-sky-200 border-sky-500/30",
-  processing: "bg-amber-500/15 text-amber-200 border-amber-500/30",
-  processed: "bg-emerald-500/15 text-emerald-200 border-emerald-500/30",
-  failed: "bg-red-500/15 text-red-200 border-red-500/30",
-  archived: "bg-slate-500/15 text-slate-300 border-slate-500/30",
-  suspended: "bg-amber-500/15 text-amber-200 border-amber-500/30",
-  inactive: "bg-slate-500/15 text-slate-300 border-slate-500/30",
+  active: "bg-emerald-50 text-emerald-700 border-emerald-200",
+  uploaded: "bg-blue-50 text-blue-700 border-blue-200",
+  processing: "bg-amber-50 text-amber-700 border-amber-200",
+  processed: "bg-emerald-50 text-emerald-700 border-emerald-200",
+  failed: "bg-red-50 text-red-700 border-red-200",
+  archived: "bg-slate-100 text-slate-600 border-slate-200",
+  suspended: "bg-amber-50 text-amber-700 border-amber-200",
+  inactive: "bg-slate-100 text-slate-600 border-slate-200",
 };
 
 type StatusBadgeProps = {
@@ -30,7 +30,7 @@ export const StatusBadge = ({ status, className }: StatusBadgeProps) => {
       variant="outline"
       className={cn(
         "border font-medium",
-        statusStyles[key] ?? "bg-slate-500/10 text-slate-300 border-slate-600/40",
+        statusStyles[key] ?? "bg-slate-100 text-slate-600 border-slate-200",
         className
       )}
     >

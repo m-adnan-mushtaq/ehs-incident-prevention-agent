@@ -31,7 +31,7 @@ export const TagListInput = ({
 
   return (
     <div className="space-y-2">
-      <Label className="text-slate-300">{label}</Label>
+      <Label className="text-slate-700">{label}</Label>
       <div className="flex gap-2">
         <Input
           value={draft}
@@ -44,7 +44,7 @@ export const TagListInput = ({
           }}
           placeholder={placeholder}
           disabled={disabled}
-          className="border-slate-700 bg-slate-900/50 text-slate-100"
+          className="border-slate-200 bg-white text-slate-950"
         />
         <Button type="button" variant="outline" onClick={addItem} disabled={disabled}>
           Add
@@ -56,12 +56,12 @@ export const TagListInput = ({
             <Badge
               key={item}
               variant="outline"
-              className="border-slate-600 bg-slate-800/60 text-slate-200 gap-1 pr-1"
+              className="gap-1 border-slate-200 bg-slate-100 pr-1 text-slate-700"
             >
               {item}
               <button
                 type="button"
-                className="ml-1 rounded hover:bg-slate-700 p-0.5"
+                className="ml-1 rounded p-0.5 hover:bg-slate-200"
                 onClick={() => onChange(values.filter((v) => v !== item))}
                 disabled={disabled}
               >

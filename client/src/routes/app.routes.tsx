@@ -9,9 +9,9 @@ import { ROUTE_PATHS } from "./paths";
 import { rootRoute } from "./root.route";
 
 const AppDashboard = () => (
-  <div className="p-8 text-slate-300">
-    <h1 className="text-2xl font-semibold text-slate-100">Safety Operations</h1>
-    <p className="mt-2 max-w-lg text-sm text-slate-400">
+  <div className="p-8 text-slate-700">
+    <h1 className="text-2xl font-semibold text-slate-950">Safety Operations</h1>
+    <p className="mt-2 max-w-lg text-sm text-slate-500">
       Select a module from the sidebar to manage sites, field teams, the document
       library, or voice knowledge notes.
     </p>

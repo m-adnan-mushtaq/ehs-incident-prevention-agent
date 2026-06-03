@@ -24,7 +24,7 @@ export const AdminSignupForm = ({ isPending, control }: Props) => (
         <FormItem>
           <FormControl>
             <ThemeInput
-              className="h-11 rounded-md border-slate-600/50 bg-slate-900/50 text-slate-100"
+              className="h-11 rounded-md border-slate-200 bg-white text-slate-950"
               startIcon={Building2}
               placeholder="Organization name"
               {...field}
@@ -41,7 +41,7 @@ export const AdminSignupForm = ({ isPending, control }: Props) => (
         <FormItem>
           <FormControl>
             <ThemeInput
-              className="h-11 rounded-md border-slate-600/50 bg-slate-900/50 text-slate-100"
+              className="h-11 rounded-md border-slate-200 bg-white text-slate-950"
               startIcon={User}
               placeholder="Your full name"
               {...field}
@@ -58,7 +58,7 @@ export const AdminSignupForm = ({ isPending, control }: Props) => (
         <FormItem>
           <FormControl>
             <ThemeInput
-              className="h-11 rounded-md border-slate-600/50 bg-slate-900/50 text-slate-100"
+              className="h-11 rounded-md border-slate-200 bg-white text-slate-950"
               startIcon={Mail}
               placeholder="Work email"
               type="email"
@@ -76,7 +76,7 @@ export const AdminSignupForm = ({ isPending, control }: Props) => (
         <FormItem>
           <FormControl>
             <ThemeInput
-              className="h-11 rounded-md border-slate-600/50 bg-slate-900/50 text-slate-100"
+              className="h-11 rounded-md border-slate-200 bg-white text-slate-950"
               startIcon={Lock}
               placeholder="Password"
               type="password"
@@ -90,7 +90,7 @@ export const AdminSignupForm = ({ isPending, control }: Props) => (
     <Button
       disabled={isPending}
       type="submit"
-      className="w-full bg-sky-600 hover:bg-sky-500 text-white"
+      className="w-full"
     >
       {isPending ? "Creating account..." : "Create organization account"}
     </Button>

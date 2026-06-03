@@ -34,3 +34,5 @@ export const CACHE_KEYS = {
 };
 
 export const BACKEND_URL = import.meta.env.VITE_API_URL;
+export const MEDIA_BASE_URL =
+  import.meta.env.VITE_MEDIA_BASE_URL || import.meta.env.VITE_API_URL;

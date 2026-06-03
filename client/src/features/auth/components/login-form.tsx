@@ -25,7 +25,7 @@ const LoginForm = ({ isPending, control }: Props) => {
           <FormItem>
             <FormControl>
               <ThemeInput
-                className="h-11 rounded-md border-slate-600/50 bg-slate-900/50 text-slate-100 text-[1rem]"
+                className="h-11 rounded-md border-slate-200 bg-white text-[1rem] text-slate-950"
                 startIcon={Mail}
                 placeholder="Email"
                 type="email"
@@ -43,7 +43,7 @@ const LoginForm = ({ isPending, control }: Props) => {
           <FormItem>
             <FormControl>
               <ThemeInput
-                className="h-11 rounded-md border-slate-600/50 bg-slate-900/50 text-slate-100 text-[1rem]"
+                className="h-11 rounded-md border-slate-200 bg-white text-[1rem] text-slate-950"
                 startIcon={Lock}
                 placeholder="Password"
                 type="password"
@@ -56,14 +56,14 @@ const LoginForm = ({ isPending, control }: Props) => {
       />
       <Link
         to="/auth/login"
-        className="text-sm text-slate-500 hover:text-slate-300"
+        className="text-sm text-slate-500 hover:text-slate-700"
       >
         Forgot password? Contact your administrator.
       </Link>
       <Button
         disabled={isPending}
         type="submit"
-        className="w-full bg-sky-600 hover:bg-sky-500 text-white"
+        className="w-full"
       >
         {isPending ? "Signing in..." : "Sign in"}
       </Button>

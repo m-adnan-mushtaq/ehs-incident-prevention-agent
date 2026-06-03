@@ -53,9 +53,9 @@ export const NavMain = ({
                     <CollapsibleTrigger asChild>
                       <SidebarMenuButton
                         className={cn(
-                          "text-slate-300 hover:bg-slate-800/60 hover:text-slate-100",
+                          "text-slate-600 hover:bg-blue-50 hover:text-blue-700",
                           (isActive || isActiveChild) &&
-                            "bg-sky-600/20 text-sky-100"
+                            "bg-blue-50 text-blue-700"
                         )}
                         tooltip={item.title}
                       >
@@ -75,7 +75,7 @@ export const NavMain = ({
                                 to={subItem.url}
                                 className={cn(
                                   pathname === subItem.url &&
-                                    "bg-sky-600/20 text-sky-100"
+                                    "bg-blue-50 text-blue-700"
                                 )}
                               >
                                 {subItem.title}
@@ -91,8 +91,8 @@ export const NavMain = ({
                     <Link
                       to={item.url}
                       className={cn(
-                        "text-slate-300 hover:bg-slate-800/60 hover:text-slate-100",
-                        isActive && "bg-sky-600/20 text-sky-100"
+                        "text-slate-600 hover:bg-blue-50 hover:text-blue-700",
+                        isActive && "bg-blue-50 text-blue-700"
                       )}
                     >
                       {item.icon && <item.icon className="h-4 w-4" />}

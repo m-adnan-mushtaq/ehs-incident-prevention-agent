@@ -26,7 +26,7 @@ const LoginPage = () => {
   return (
     <>
       <CardHeader className="px-0 pb-2 text-center">
-        <CardTitle className="text-xl text-slate-100">Sign in</CardTitle>
+        <CardTitle className="text-xl text-slate-950">Sign in</CardTitle>
         <CardDescription className="text-slate-500">
           Access your safety operations workspace
         </CardDescription>

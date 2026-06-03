@@ -38,7 +38,7 @@ export const useColumns = (actions: TableActions<ISite>) => {
             <Button
               size="icon"
               variant="ghost"
-              className="text-slate-400 hover:text-sky-300"
+              className="text-slate-500 hover:text-blue-700"
               onClick={() => actions.handleEdit?.(row.original)}
             >
               <Pencil className="h-4 w-4" />
@@ -46,7 +46,7 @@ export const useColumns = (actions: TableActions<ISite>) => {
             <Button
               size="icon"
               variant="ghost"
-              className="text-slate-400 hover:text-red-400"
+              className="text-slate-500 hover:text-red-600"
               onClick={() => actions.handleDelete?.(row.original)}
             >
               <Trash2 className="h-4 w-4" />

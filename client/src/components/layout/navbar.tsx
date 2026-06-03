@@ -36,7 +36,7 @@ const NavBar = () => {
         <p className="text-xs uppercase tracking-wide text-slate-500">
           Tenant
         </p>
-        <p className="text-sm font-medium text-slate-200">
+        <p className="text-sm font-medium text-slate-900">
           {user?.tenant?.name ?? "Safety Operations"}
         </p>
       </div>
@@ -44,25 +44,25 @@ const NavBar = () => {
         <DropdownMenuTrigger asChild>
           <button
             type="button"
-            className="ml-auto flex cursor-pointer items-center gap-3 rounded-md border border-slate-700/60 bg-slate-900/40 px-3 py-2"
+            className="ml-auto flex cursor-pointer items-center gap-3 rounded-md border border-slate-200 bg-white px-3 py-2 shadow-sm transition hover:border-slate-300"
           >
             <UserAvatar user={user} />
             <div className="hidden text-left text-sm sm:block">
-              <p className="font-medium text-slate-100">{user?.name}</p>
+              <p className="font-medium text-slate-900">{user?.name}</p>
               <p className="text-xs text-slate-500">
                 {role ? roleLabel[role] : "User"}
               </p>
             </div>
           </button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-56 border-slate-700 bg-slate-900 text-slate-100">
+        <DropdownMenuContent className="w-56 border-slate-200 bg-white text-slate-900">
           <DropdownMenuLabel className="font-normal">
             <p className="font-medium">{user?.name}</p>
-            <p className="text-xs text-slate-400">{user?.email}</p>
+            <p className="text-xs text-slate-500">{user?.email}</p>
           </DropdownMenuLabel>
-          <DropdownMenuSeparator className="bg-slate-700" />
+          <DropdownMenuSeparator className="bg-slate-200" />
           <DropdownMenuItem
-            className="cursor-pointer focus:bg-slate-800"
+            className="cursor-pointer focus:bg-slate-100"
             onClick={() => modalStateHandler(MODAL_TYPE.DELETE, true)}
           >
             <LogOut className="mr-2 h-4 w-4" />

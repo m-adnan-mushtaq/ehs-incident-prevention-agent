@@ -17,7 +17,11 @@ import {
   getSaveStatusMessage,
   mapVoiceExtractionToKnowledgePayload,
 } from "./utils/mapVoiceExtractionToKnowledgePayload";
-import { useCreateVoiceKnowledge, getSuccessToastForRole } from "./hooks/useCreateVoiceKnowledge";
+import {
+  useCreateVoiceKnowledge,
+  getSuccessToastForRole,
+} from "./hooks/useCreateVoiceKnowledge";
+import { useApproveVoiceKnowledge } from "./hooks/useApproveVoiceKnowledge";
 import { useVoiceExtraction } from "./hooks/useVoiceExtraction";
 import { useVoiceKnowledgeDetail } from "./hooks/useVoiceKnowledgeDetail";
 import toast from "react-hot-toast";
@@ -39,6 +43,7 @@ const VoiceKnowledgePage = () => {
 
   const extractMutation = useVoiceExtraction();
   const createMutation = useCreateVoiceKnowledge();
+  const approveMutation = useApproveVoiceKnowledge();
   const { data: sites = [] } = useQuery({
     queryKey: CACHE_KEYS.sites.listAll,
     queryFn: sitesService.getAllSites,
@@ -112,11 +117,11 @@ const VoiceKnowledgePage = () => {
   const canSave = showReview && !createMutation.isPending && !extractMutation.isPending;
 
   return (
-    <Container className="text-slate-200 pb-16">
-      <div className="sticky top-0 z-10 -mx-4 mb-6 border-b border-slate-800/80 bg-[#0c1424]/95 px-4 py-4 backdrop-blur md:-mx-8 md:px-8">
+    <Container className="pb-16 text-slate-900">
+      <div className="sticky top-0 z-10 -mx-4 mb-6 border-b border-slate-200 bg-slate-50/95 px-4 py-4 backdrop-blur md:-mx-8 md:px-8">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div>
-            <h1 className="text-xl font-semibold text-slate-100 md:text-2xl">
+            <h1 className="text-2xl font-semibold text-slate-950">
               Voice Knowledge Notes
             </h1>
             <p className="mt-1 max-w-2xl text-sm text-slate-500">
@@ -129,7 +134,7 @@ const VoiceKnowledgePage = () => {
               type="submit"
               form={FORM_ID}
               disabled={!canSave}
-              className="shrink-0 bg-sky-600 hover:bg-sky-500"
+              className="shrink-0"
             >
               {createMutation.isPending ? (
                 <>
@@ -147,7 +152,7 @@ const VoiceKnowledgePage = () => {
         </div>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-2">
+      <div className="grid gap-6">
         <VoiceRecorderCard
           audioBlob={audioBlob}
           previewUrl={previewUrl}
@@ -160,8 +165,8 @@ const VoiceKnowledgePage = () => {
           onMicError={setMicError}
         />
         {extractMutation.isPending && (
-          <div className="flex items-center justify-center rounded-lg border border-slate-800 bg-slate-900/30 p-8 text-slate-400">
-            <Loader2 className="h-5 w-5 animate-spin text-sky-400" />
+          <div className="flex items-center justify-center rounded-lg border border-slate-200 bg-white p-8 text-slate-500 shadow-sm">
+            <Loader2 className="h-5 w-5 animate-spin text-blue-600" />
             <span className="ml-2">Extracting structured safety knowledge...</span>
           </div>
         )}
@@ -190,6 +195,11 @@ const VoiceKnowledgePage = () => {
         onClose={() => setDetailId(null)}
         note={detailNote ?? null}
         isLoading={detailLoading}
+        canApprove={role === "admin" || role === "sme"}
+        isApproving={approveMutation.isPending}
+        onApprove={async (note) => {
+          await approveMutation.mutateAsync(note.id);
+        }}
       />
     </Container>
   );

@@ -5,7 +5,8 @@ import { CACHE_KEYS } from "@/constants/common";
 import { knowledgeObjectsService } from "@/services";
 import type { IKnowledgeObject } from "@/types/knowledge-object";
 import { Button } from "@/components/ui/button";
-import { Loader2 } from "lucide-react";
+import { ThemeInput } from "@/components/form/ThemeInput";
+import { Loader2, Search } from "lucide-react";
 import { VOICE_SOURCE_TYPE } from "../utils/voiceKnowledge.constants";
 import { VoiceKnowledgeCard } from "./VoiceKnowledgeCard";
 
@@ -19,23 +20,36 @@ export const VoiceKnowledgeListContent = ({
   totalRecords,
   paginationModel,
   setPaginationModel,
+  handleSearch,
+  search,
   onView,
 }: VoiceKnowledgeListProps) => {
   const pageCount = Math.max(1, Math.ceil(totalRecords / paginationModel.pageSize));
 
   return (
   <section className="space-y-4">
-    <div className="flex items-center justify-between">
-      <h2 className="text-lg font-semibold text-slate-100">Previous voice notes</h2>
-      <span className="text-sm text-slate-500">{totalRecords} total</span>
+    <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+      <div>
+        <h2 className="text-lg font-semibold text-slate-950">Previous voice notes</h2>
+        <span className="text-sm text-slate-500">{totalRecords} total</span>
+      </div>
+      <div className="w-full sm:max-w-80">
+        <ThemeInput
+          startIcon={Search}
+          className="rounded-md border-slate-200 bg-white"
+          placeholder="Search voice notes..."
+          value={search}
+          onChange={handleSearch}
+        />
+      </div>
     </div>
     {isLoading ? (
-      <div className="flex items-center justify-center py-16 text-slate-400">
-        <Loader2 className="h-6 w-6 animate-spin text-sky-400" />
+      <div className="flex items-center justify-center rounded-lg border border-slate-200 bg-white py-16 text-slate-500">
+        <Loader2 className="h-6 w-6 animate-spin text-blue-600" />
         <span className="ml-2">Loading voice notes...</span>
       </div>
     ) : data.length === 0 ? (
-      <p className="rounded-lg border border-dashed border-slate-800 py-12 text-center text-sm text-slate-500">
+      <p className="rounded-lg border border-dashed border-slate-300 bg-white py-12 text-center text-sm text-slate-500">
         No voice knowledge notes yet. Record a safety note to begin building trusted
         field knowledge.
       </p>

@@ -13,6 +13,7 @@ import {
 import type {
   ICreateKnowledgeObjectPayload,
   IKnowledgeObject,
+  IUpdateKnowledgeObjectPayload,
 } from "@/types/knowledge-object";
 import { apiInstance } from "./_base";
 
@@ -53,6 +54,17 @@ export const createKnowledgeObject = async (
 ) => {
   const response = await apiInstance.post<IApiEnvelope<IKnowledgeObject>>(
     apiRoutes.KNOWLEDGE.list(),
+    payload
+  );
+  return unwrapData(response);
+};
+
+export const updateKnowledgeObject = async (
+  id: string,
+  payload: IUpdateKnowledgeObjectPayload
+) => {
+  const response = await apiInstance.patch<IApiEnvelope<IKnowledgeObject>>(
+    apiRoutes.KNOWLEDGE.byId(id),
     payload
   );
   return unwrapData(response);

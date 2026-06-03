@@ -68,7 +68,7 @@ function withPaginatedQuery<TData>(
 
     // Search State
     const [search, setSearch] = useState<string>("");
-    const debouncedSearch = useDebounce(search, 1000);
+    const debouncedSearch = useDebounce(search.trim(), 500);
 
     // Additional Filters State
     const defaultAdditionalFilters = options.defaultAdditionalFilters || {};
@@ -99,7 +99,7 @@ function withPaginatedQuery<TData>(
         options.queryFn({
           page: paginationModel.pageIndex + 1,
           page_size: paginationModel.pageSize,
-          //   search: debouncedSearch,
+          search: debouncedSearch || undefined,
           //   sortBy: sortModel[0]?.id,
           //   sortOrder: sortModel?.[0]?.desc === true ? "desc" : "asc",
           ...additionalFilters,

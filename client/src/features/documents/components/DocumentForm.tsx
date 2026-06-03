@@ -17,7 +17,9 @@ const schema = z
     document_type: z.string().optional(),
     topic: z.string().optional(),
     site_ids: z.string().optional(),
-    file: z.any().refine((f) => f instanceof File, "Document file is required."),
+    file: z
+      .any()
+      .refine((f) => f instanceof File, "Document file is required."),
   })
   .superRefine((data, ctx) => {
     if (data.source_scope === "site" && !data.site_ids?.trim()) {
@@ -73,7 +75,7 @@ export const DocumentForm = ({
           form.reset();
           onClose();
         })}
-        className="flex flex-col gap-4"
+        className="flex flex-col gap-4 mx-4"
       >
         <ControlledInput name="title" control={form.control} label="Title" />
         <ControlledSelect
@@ -123,7 +125,7 @@ export const DocumentForm = ({
           <Button type="button" variant="outline" onClick={onClose}>
             Cancel
           </Button>
-          <Button type="submit" disabled={loading} className="bg-sky-600 hover:bg-sky-500">
+          <Button type="submit" disabled={loading}>
             {loading ? "Uploading..." : "Upload document"}
           </Button>
         </div>

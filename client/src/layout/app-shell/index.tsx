@@ -31,10 +31,10 @@ const AppShellLayout = () => {
   return (
     <SidebarProvider>
       <AppSidebar />
-      <SidebarInset className="max-w-full overflow-auto bg-[#0c1424]">
-        <header className="flex h-16 shrink-0 items-center gap-2 border-b border-slate-800/80 bg-[#0f1729]">
+      <SidebarInset className="max-w-full overflow-auto bg-slate-50">
+        <header className="flex h-16 shrink-0 items-center gap-2 border-b border-slate-200 bg-white/95 backdrop-blur">
           <div className="flex w-full items-center px-4 lg:hidden">
-            <SidebarTrigger className="text-slate-300">
+            <SidebarTrigger className="text-slate-700">
               <Menu />
             </SidebarTrigger>
           </div>

@@ -12,15 +12,15 @@ const AuthLayout = () => {
   }
 
   return (
-    <div className="flex min-h-screen w-full items-center justify-center bg-[#060b14] px-4">
-      <div className="w-full max-w-md space-y-8 rounded-xl border border-slate-800/80 bg-[#0c1424] p-8 shadow-xl shadow-black/20">
+    <div className="flex min-h-screen w-full items-center justify-center bg-slate-50 px-4">
+      <div className="w-full max-w-md space-y-8 rounded-lg border border-slate-200 bg-white p-8 shadow-sm">
         <div className="text-center">
           <Link to={ROUTE_PATHS.auth.login} className="inline-flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-sky-600/20 text-sky-400">
+            <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-blue-50 text-blue-700">
               <Shield className="h-6 w-6" />
             </div>
             <div className="text-left">
-              <p className="text-lg font-semibold text-slate-100">
+              <p className="text-lg font-semibold text-slate-950">
                 Safety Operations
               </p>
               <p className="text-xs text-slate-500">EHS Incident Prevention</p>
@@ -33,7 +33,7 @@ const AuthLayout = () => {
             New organization?{" "}
             <Link
               to={ROUTE_PATHS.auth.adminSignup}
-              className="font-medium text-sky-400 hover:text-sky-300"
+              className="font-medium text-blue-700 hover:text-blue-800"
             >
               Create admin account
             </Link>

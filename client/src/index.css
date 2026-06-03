@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -59,44 +59,44 @@
 :root {
   --radius: 0.5rem;
 
-  --primary: #0ea5e9;
-  --dark-primary: #0284c7;
-  --primary-light: #0c4a6e;
-  --danger: #ef4444;
-  --success: #10b981;
-  --warning: #f59e0b;
-  --text-light: #94a3b8;
-  --text-normal: #e2e8f0;
+  --primary: #2563eb;
+  --dark-primary: #1d4ed8;
+  --primary-light: #dbeafe;
+  --danger: #dc2626;
+  --success: #059669;
+  --warning: #d97706;
+  --text-light: #64748b;
+  --text-normal: #0f172a;
 
-  --background: #060b14;
-  --foreground: #e2e8f0;
-  --card: #0c1424;
-  --card-foreground: #e2e8f0;
-  --popover: #0f1729;
-  --popover-foreground: #e2e8f0;
-  --primary-foreground: #f8fafc;
-  --secondary: #1e293b;
-  --secondary-foreground: #cbd5e1;
-  --muted: #1e293b;
-  --accent: #172554;
-  --accent-foreground: #e2e8f0;
+  --background: #f7f9fc;
+  --foreground: #0f172a;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --popover: #ffffff;
+  --popover-foreground: #0f172a;
+  --primary-foreground: #ffffff;
+  --secondary: #eef2f7;
+  --secondary-foreground: #334155;
+  --muted: #f1f5f9;
+  --accent: #e8f0fe;
+  --accent-foreground: #1e3a8a;
   --destructive: #dc2626;
-  --border: #334155;
-  --input: #334155;
-  --ring: #0ea5e9;
+  --border: #dbe3ef;
+  --input: #cbd5e1;
+  --ring: #2563eb;
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
   --chart-4: oklch(0.828 0.189 84.429);
   --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: #0a1020;
-  --sidebar-foreground: #cbd5e1;
-  --sidebar-primary: #0ea5e9;
-  --sidebar-primary-foreground: #f8fafc;
-  --sidebar-accent: #1e293b;
-  --sidebar-accent-foreground: #e2e8f0;
-  --sidebar-border: #1e293b;
-  --sidebar-ring: #0ea5e9;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #334155;
+  --sidebar-primary: #2563eb;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #eff6ff;
+  --sidebar-accent-foreground: #1d4ed8;
+  --sidebar-border: #dbe3ef;
+  --sidebar-ring: #2563eb;
 }
 
 .dark {
@@ -146,6 +146,7 @@
   body {
     @apply bg-background text-foreground;
     font-family: var(--font-body);
+    letter-spacing: 0;
   }
 
   h1,

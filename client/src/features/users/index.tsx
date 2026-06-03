@@ -26,6 +26,8 @@ const UsersPage = ({
   sortModel,
   setPaginationModel,
   totalRecords,
+  handleSearch,
+  search,
 }: PaginationWrapperProps<ICurrentUser>) => {
   const { modalState, modalStateHandler } = useModal();
   const [selectedUser, setSelectedUser] = useState<ICurrentUser>();
@@ -53,16 +55,15 @@ const UsersPage = ({
   const dialogType = modalState.edit ? MODAL_TYPE.EDIT : MODAL_TYPE.CREATE;
 
   return (
-    <Container className="text-slate-200">
+    <Container className="pb-10 text-slate-900">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-xl font-semibold text-slate-100">Field Teams</h2>
+          <h2 className="text-2xl font-semibold text-slate-950">Field Teams</h2>
           <p className="text-sm text-slate-500">
             Manage administrators, safety managers, and field workers.
           </p>
         </div>
         <Button
-          className="bg-sky-600 hover:bg-sky-500"
           onClick={() => {
             setSelectedUser(undefined);
             modalStateHandler(MODAL_TYPE.CREATE, true);
@@ -71,18 +72,22 @@ const UsersPage = ({
           <Plus className="h-4 w-4" /> Add user
         </Button>
       </div>
-      <DataTable
-        columns={columns as never}
-        data={data}
-        total={totalRecords}
-        sorting={sortModel}
-        setSorting={setSortModel}
-        loading={isLoading}
-        pagination={paginationModel}
-        setPagination={setPaginationModel}
-        visiblePagination
-        emptyPlaceholder="No users found. Add team members to begin."
-      />
+      <div className="rounded-lg border border-slate-200 bg-white p-3 shadow-sm">
+        <DataTable
+          columns={columns as never}
+          data={data}
+          total={totalRecords}
+          sorting={sortModel}
+          setSorting={setSortModel}
+          loading={isLoading}
+          pagination={paginationModel}
+          setPagination={setPaginationModel}
+          visiblePagination
+          emptyPlaceholder="No users found. Add team members to begin."
+          search={search}
+          onSearch={handleSearch}
+        />
+      </div>
       <UserDialog
         open={dialogOpen}
         modalType={dialogType}
