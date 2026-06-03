@@ -17,9 +17,7 @@ const schema = z
     document_type: z.string().optional(),
     topic: z.string().optional(),
     site_ids: z.string().optional(),
-    file: z
-      .any()
-      .refine((f) => f instanceof File, "Document file is required."),
+    file: z.any(),
   })
   .superRefine((data, ctx) => {
     if (data.source_scope === "site" && !data.site_ids?.trim()) {
@@ -63,6 +61,12 @@ export const DocumentForm = ({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(async (values) => {
+          const file = values?.file?.[0];
+          if (!file) {
+            form.setError("file", { message: "Document file is required." });
+            return;
+          }
+
           await onSubmit({
             title: values.title,
             source_scope: values.source_scope,
@@ -70,7 +74,7 @@ export const DocumentForm = ({
             document_type: values.document_type,
             topic: values.topic,
             site_ids: values.site_ids,
-            file: values.file as File,
+            file,
           });
           form.reset();
           onClose();

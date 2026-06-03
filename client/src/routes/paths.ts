@@ -11,6 +11,9 @@ export const ROUTE_PATHS = {
     sites: "/app/sites",
     documents: "/app/documents",
     voiceKnowledge: "/app/voice-knowledge",
+    incidents: "/app/incidents",
+    chat: "/app/chat",
+    chatSession: "/app/chat/$sessionId",
   },
 } as const;
 

@@ -31,6 +31,16 @@ export const CACHE_KEYS = {
     all: ["voice-knowledge"] as const,
     paginated: (params: unknown) => ["voice-knowledge", "paginated", params] as const,
   },
+  incidents: {
+    all: ["incidents"] as const,
+    paginated: (params: unknown) => ["incidents", "paginated", params] as const,
+    detail: (id: string) => ["incidents", "detail", id] as const,
+  },
+  chat: {
+    sessions: ["chat", "sessions"] as const,
+    session: (id: string) => ["chat", "session", id] as const,
+    messages: (sessionId: string) => ["chat", "messages", sessionId] as const,
+  },
 };
 
 export const BACKEND_URL = import.meta.env.VITE_API_URL;

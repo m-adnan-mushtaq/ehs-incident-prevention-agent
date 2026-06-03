@@ -13,9 +13,9 @@ import {
 import type { IVoiceKnowledgeFormValues } from "@/types/voice-knowledge";
 import type { ISite } from "@/types/site";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { SITE_NONE_VALUE } from "./VoiceExtractionReview";
 import { RISK_LEVELS } from "../utils/voiceKnowledge.constants";
 import { TagListInput } from "./TagListInput";
 import { VoiceKnowledgeRiskBadge } from "./VoiceKnowledgeRiskBadge";
@@ -52,7 +52,7 @@ const schema = z
   );
 
 type Props = {
-  defaultValues: IVoiceKnowledgeFormValues;
+  values: IVoiceKnowledgeFormValues;
   confidenceScore?: number;
   saveStatusHint: string;
   sites?: ISite[];
@@ -62,7 +62,7 @@ type Props = {
 };
 
 export const VoiceKnowledgeForm = ({
-  defaultValues,
+  values,
   confidenceScore,
   saveStatusHint,
   sites = [],
@@ -72,12 +72,8 @@ export const VoiceKnowledgeForm = ({
 }: Props) => {
   const form = useForm<IVoiceKnowledgeFormValues>({
     resolver: zodResolver(schema),
-    defaultValues,
+    defaultValues: values,
   });
-
-  useEffect(() => {
-    form.reset(defaultValues);
-  }, [defaultValues, form]);
 
   const riskLevel = form.watch("risk_level");
 
@@ -115,7 +111,7 @@ export const VoiceKnowledgeForm = ({
                 disabled={disabled}
                 placeholder="Select site"
                 options={[
-                  { label: "No site selected", value: "" },
+                  { label: "No site selected", value: SITE_NONE_VALUE },
                   ...sites.map((s) => ({ label: s.name, value: s.id })),
                 ]}
               />

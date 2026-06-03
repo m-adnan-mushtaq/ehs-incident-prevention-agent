@@ -40,3 +40,18 @@ export const KNOWLEDGE = {
   list: () => `${KNOWLEDGE.BASE}/`,
   byId: (id: string) => `${KNOWLEDGE.BASE}/${id}`,
 };
+
+export const INCIDENTS = {
+  BASE: "/incidents",
+  list: () => `${INCIDENTS.BASE}/`,
+  byId: (id: string) => `${INCIDENTS.BASE}/${id}`,
+  status: (id: string) => `${INCIDENTS.BASE}/${id}/status`,
+  extractVoice: () => `${INCIDENTS.BASE}/extract/voice`,
+};
+
+export const CHAT = {
+  BASE: "/chat",
+  sessions: () => `${CHAT.BASE}/sessions`,
+  sessionById: (id: string) => `${CHAT.BASE}/sessions/${id}`,
+  messages: (sessionId: string) => `${CHAT.BASE}/sessions/${sessionId}/messages`,
+};

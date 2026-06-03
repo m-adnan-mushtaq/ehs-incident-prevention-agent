@@ -220,3 +220,31 @@
     animation: collapsible-up 0.2s ease-out;
   }
 }
+
+/* Chat assistant markdown — always light, matches card background */
+.chat-markdown-preview .wmde-markdown {
+  background-color: transparent;
+  color: rgb(30 41 59);
+  font-size: 0.875rem;
+  line-height: 1.625;
+}
+
+.chat-markdown-preview .wmde-markdown h1,
+.chat-markdown-preview .wmde-markdown h2,
+.chat-markdown-preview .wmde-markdown h3 {
+  margin-top: 0.75em;
+  margin-bottom: 0.35em;
+  font-weight: 600;
+  color: rgb(15 23 42);
+}
+
+.chat-markdown-preview .wmde-markdown p {
+  margin-top: 0.35em;
+  margin-bottom: 0.35em;
+}
+
+.chat-markdown-preview .wmde-markdown ul,
+.chat-markdown-preview .wmde-markdown ol {
+  margin: 0.35em 0;
+  padding-left: 1.25rem;
+}

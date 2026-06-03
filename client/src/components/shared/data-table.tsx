@@ -169,7 +169,7 @@ function DataTable<TData, TValue>({
         className={cn(
           "w-full mb-1",
           "rounded-lg",
-          "border-separate border-spacing-y-4"
+          "border-separate border-spacing-y-4",
         )}
       >
         <TableHeader>
@@ -184,7 +184,9 @@ function DataTable<TData, TValue>({
                 return (
                   <TableHead
                     key={header.id}
-                    className={cn("cursor-pointer select-none bg-white text-slate-600")}
+                    className={cn(
+                      "cursor-pointer select-none bg-white text-slate-600",
+                    )}
                     onClick={
                       header.column.getCanSort()
                         ? header.column.getToggleSortingHandler()
@@ -194,7 +196,7 @@ function DataTable<TData, TValue>({
                     <div className="flex items-center gap-2">
                       {flexRender(
                         header.column.columnDef.header,
-                        header.getContext()
+                        header.getContext(),
                       )}
                       {header.column.getCanSort() && !skipSorting && (
                         <>
@@ -247,7 +249,7 @@ function DataTable<TData, TValue>({
                   size === "sm" && "h-8",
                   size === "md" && "h-12",
                   size === "lg" && "h-14",
-                  !bordered && "!border-0"
+                  !bordered && "!border-0",
                 )}
               >
                 {table
@@ -269,14 +271,14 @@ function DataTable<TData, TValue>({
                           cellIndex === 0
                             ? "rounded-l-lg"
                             : cellIndex === columns.length - 1
-                            ? "rounded-r-lg"
-                            : ""
+                              ? "rounded-r-lg"
+                              : "",
                         )}
                         key={cell.id}
                       >
                         {flexRender(
                           cell.column.columnDef.cell,
-                          cell.getContext()
+                          cell.getContext(),
                         )}
                       </TableCell>
                     );
@@ -288,7 +290,7 @@ function DataTable<TData, TValue>({
               <TableCell colSpan={columns.length} className="text-center">
                 <div className="my-4 flex flex-col items-center justify-center text-slate-400">
                   <Inbox size={40} className=" text-gray-300" />
-                  <p className="font-semibold text-lg mt-2">
+                  <p className="font-semibold text-sm mt-2">
                     {loading ? "Loading..." : emptyPlaceholder}
                   </p>
                 </div>
@@ -303,7 +305,7 @@ function DataTable<TData, TValue>({
         <div
           className={cn(
             "flex justify-between py-4",
-            bordered && "border-borderBg border-none mt-1"
+            bordered && "border-borderBg border-none mt-1",
           )}
         >
           <div className="flex items-center space-x-2">
@@ -367,7 +369,7 @@ function DataTable<TData, TValue>({
                   <PaginationItem key={idx}>
                     <PaginationEllipsis />
                   </PaginationItem>
-                )
+                ),
               )}
 
               <PaginationItem>

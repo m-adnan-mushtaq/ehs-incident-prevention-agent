@@ -3,6 +3,9 @@ import {
   appIndexRoute,
   appRoute,
   documentsRoute,
+  chatRoute,
+  chatSessionRoute,
+  incidentsRoute,
   sitesRoute,
   usersRoute,
   voiceKnowledgeRoute,
@@ -19,5 +22,7 @@ export const routeTree = rootRoute.addChildren([
     sitesRoute,
     documentsRoute,
     voiceKnowledgeRoute,
+    incidentsRoute,
+    chatRoute.addChildren([chatSessionRoute]),
   ]),
 ]);

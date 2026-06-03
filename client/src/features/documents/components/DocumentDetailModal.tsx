@@ -33,16 +33,14 @@ const isPdf = (document?: IDocument | null) => {
   const fileName = document?.file_name?.toLowerCase() ?? "";
   const fileType = document?.file_type?.toLowerCase() ?? "";
   const url = document?.file_url?.toLowerCase() ?? "";
-  return fileType.includes("pdf") || fileName.endsWith(".pdf") || url.endsWith(".pdf");
+  return (
+    fileType.includes("pdf") ||
+    fileName.endsWith(".pdf") ||
+    url.endsWith(".pdf")
+  );
 };
 
-const DetailItem = ({
-  label,
-  value,
-}: {
-  label: string;
-  value?: ReactNode;
-}) => (
+const DetailItem = ({ label, value }: { label: string; value?: ReactNode }) => (
   <div>
     <dt className="text-xs font-medium uppercase tracking-wide text-slate-500">
       {label}
@@ -62,7 +60,7 @@ export const DocumentDetailModal = ({
 
   return (
     <Dialog open={open} onOpenChange={(value) => !value && onClose()}>
-      <DialogContent className="max-h-[92vh] max-w-[min(1120px,calc(100vw-2rem))] overflow-y-auto border-slate-200 bg-white p-0 text-slate-950">
+      <DialogContent className="max-h-[92vh]  min-w-[80vw] overflow-y-auto border-slate-200 bg-white p-0 text-slate-950">
         {isLoading || !document ? (
           <div className="flex items-center justify-center py-24 text-slate-500">
             <Loader2 className="h-6 w-6 animate-spin text-blue-600" />
@@ -78,7 +76,9 @@ export const DocumentDetailModal = ({
                     {document.title}
                   </DialogTitle>
                   <p className="mt-1 text-sm text-slate-500">
-                    {document.description || document.file_name || "Document details"}
+                    {document.description ||
+                      document.file_name ||
+                      "Document details"}
                   </p>
                 </div>
                 <div className="flex flex-wrap items-center gap-2">
@@ -109,7 +109,9 @@ export const DocumentDetailModal = ({
                   <DetailItem
                     label="Uploaded"
                     value={
-                      document.created_at ? formatDateTime(document.created_at) : "-"
+                      document.created_at
+                        ? formatDateTime(document.created_at)
+                        : "-"
                     }
                   />
                 </dl>

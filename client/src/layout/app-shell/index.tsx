@@ -40,7 +40,7 @@ const AppShellLayout = () => {
           </div>
           <NavBar />
         </header>
-        <main className="flex-1 overflow-auto p-0 min-h-[calc(100vh-4rem)]">
+        <main className="flex-1 overflow-auto p-0 min-h-0">
           <Outlet />
         </main>
       </SidebarInset>

@@ -5,3 +5,5 @@ export * as documentsService from "./documents.service";
 export * as rolesService from "./roles.service";
 export * as voiceKnowledgeService from "./voice-knowledge.service";
 export * as knowledgeObjectsService from "./knowledge-objects.service";
+export * as incidentsService from "./incidents.service";
+export * as chatService from "./chat.service";

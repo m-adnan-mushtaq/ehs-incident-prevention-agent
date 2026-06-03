@@ -13,6 +13,7 @@ import { getUserRole } from "@/lib/user-role";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { toTitleCase } from "@/lib/utils";
 
 const createSchema = z.object({
   name: z.string().min(1, "Name is required."),
@@ -57,7 +58,12 @@ const CreateUserForm = ({
         className="flex min-w-[320px] flex-col gap-4"
       >
         <ControlledInput name="name" control={form.control} label="Full name" />
-        <ControlledInput name="email" control={form.control} label="Email" type="email" />
+        <ControlledInput
+          name="email"
+          control={form.control}
+          label="Email"
+          type="email"
+        />
         <ControlledInput
           name="password"
           control={form.control}
@@ -74,7 +80,11 @@ const CreateUserForm = ({
           }))}
           placeholder="Select role"
         />
-        <FormActions loading={loading} onClose={onClose} submitLabel="Add user" />
+        <FormActions
+          loading={loading}
+          onClose={onClose}
+          submitLabel="Add user"
+        />
       </form>
     </Form>
   );
@@ -115,7 +125,7 @@ const EditUserForm = ({
           control={form.control}
           label="Role"
           options={roles.map((r) => ({
-            label: r.name.replace(/_/g, " "),
+            label: toTitleCase(r.name),
             value: r.name,
           }))}
         />
@@ -128,7 +138,11 @@ const EditUserForm = ({
             { label: "Inactive", value: "false" },
           ]}
         />
-        <FormActions loading={loading} onClose={onClose} submitLabel="Update user" />
+        <FormActions
+          loading={loading}
+          onClose={onClose}
+          submitLabel="Update user"
+        />
       </form>
     </Form>
   );
@@ -154,4 +168,8 @@ const FormActions = ({
 );
 
 export const UserForm = (props: UserFormProps) =>
-  props.user ? <EditUserForm {...props} user={props.user} /> : <CreateUserForm {...props} />;
+  props.user ? (
+    <EditUserForm {...props} user={props.user} />
+  ) : (
+    <CreateUserForm {...props} />
+  );

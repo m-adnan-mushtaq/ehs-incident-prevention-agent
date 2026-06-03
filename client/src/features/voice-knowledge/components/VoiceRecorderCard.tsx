@@ -16,6 +16,7 @@ type Props = {
   isExtracting: boolean;
   hasExtraction: boolean;
   micError: string | null;
+  embedded?: boolean;
   onRecordingComplete: (blob: Blob) => void;
   onExtract: () => void;
   onReRecord: () => void;
@@ -34,6 +35,7 @@ export const VoiceRecorderCard = ({
   isExtracting,
   hasExtraction,
   micError,
+  embedded = false,
   onRecordingComplete,
   onExtract,
   onReRecord,
@@ -45,18 +47,8 @@ export const VoiceRecorderCard = ({
       onMicError,
     });
 
-  return (
-    <Card className="border-slate-200 bg-white shadow-sm">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2 text-slate-950">
-          <Mic className="h-5 w-5 text-blue-600" />
-          Record Safety Note
-        </CardTitle>
-        <CardDescription className="text-slate-500">
-          Capture field observations, near misses, or expert safety guidance.
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-4">
+  const body = (
+    <div className="space-y-4">
         {micError && (
           <Alert variant="destructive" className="border-red-200 bg-red-50">
             <AlertDescription>{micError}</AlertDescription>
@@ -147,7 +139,23 @@ export const VoiceRecorderCard = ({
             </div>
           </div>
         )}
-      </CardContent>
+    </div>
+  );
+
+  if (embedded) return body;
+
+  return (
+    <Card className="border-slate-200 bg-white shadow-sm">
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2 text-slate-950">
+          <Mic className="h-5 w-5 text-blue-600" />
+          Record Safety Note
+        </CardTitle>
+        <CardDescription className="text-slate-500">
+          Capture field observations, near misses, or expert safety guidance.
+        </CardDescription>
+      </CardHeader>
+      <CardContent>{body}</CardContent>
     </Card>
   );
 };

@@ -1,7 +1,9 @@
 import DocumentsPage from "@/features/documents";
 import SitesPage from "@/features/sites";
 import UsersPage from "@/features/users";
+import IncidentsPage from "@/features/incidents";
 import VoiceKnowledgePage from "@/features/voice-knowledge";
+import ChatPage from "@/features/chat";
 import AppShellLayout from "@/layout/app-shell";
 import { createRoute } from "@tanstack/react-router";
 import { requireAdmin, requireAuth } from "./guards";
@@ -58,10 +60,30 @@ export const voiceKnowledgeRoute = createRoute({
   component: VoiceKnowledgePage,
 });
 
+export const incidentsRoute = createRoute({
+  getParentRoute: () => appRoute,
+  path: "/incidents",
+  component: IncidentsPage,
+});
+
+export const chatRoute = createRoute({
+  getParentRoute: () => appRoute,
+  path: "/chat",
+  component: ChatPage,
+});
+
+export const chatSessionRoute = createRoute({
+  getParentRoute: () => chatRoute,
+  path: "$sessionId",
+  component: ChatPage,
+});
+
 export const appRoutes = [
   appIndexRoute,
   usersRoute,
   sitesRoute,
   documentsRoute,
   voiceKnowledgeRoute,
+  incidentsRoute,
+  chatRoute,
 ] as const;
