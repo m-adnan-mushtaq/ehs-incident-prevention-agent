@@ -1,7 +1,4 @@
-"use client";
-
-import { ChevronDown, Plus } from "lucide-react";
-
+import { ChevronDown } from "lucide-react";
 import {
   Collapsible,
   CollapsibleContent,
@@ -17,42 +14,37 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
-import { NavLink, useLocation } from "react-router";
-import { INavLink } from "@/types";
 import { cn } from "@/lib/utils";
-import { isLinkActive } from "@/helpers/common";
-import { Badge } from "./ui/badge";
+import type { INavLink } from "@/types";
+import { Link, useRouterState } from "@tanstack/react-router";
 
-export function NavMain({
+export const NavMain = ({
   items,
   showLabel,
 }: {
   items: INavLink[];
   showLabel?: boolean;
-}) {
-  const { pathname } = useLocation();
+}) => {
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   return (
     <SidebarGroup>
       {showLabel && (
-        <SidebarGroupLabel className="capitalize  cursor-pointer text-muted-foreground flex justify-between items-center">
-          <span className="uppercase">Pages</span>
-          <Plus />
+        <SidebarGroupLabel className="text-xs uppercase tracking-wide text-slate-500">
+          Modules
         </SidebarGroupLabel>
       )}
       <SidebarMenu>
         {items.map((item) => {
-          const isActive = isLinkActive(pathname, item.url);
+          const isActive = pathname === item.url;
           const hasChildren = Boolean(item.items?.length);
-          const isActiveChild = hasChildren
-            ? item.items?.some((subItem) => subItem.url === pathname)
-            : false;
+          const isActiveChild = item.items?.some((sub) => pathname === sub.url);
 
           return (
             <Collapsible
               key={item.title}
               asChild
-              defaultOpen={item.isActive}
+              defaultOpen={isActiveChild}
               className="group/collapsible"
             >
               <SidebarMenuItem>
@@ -61,24 +53,16 @@ export function NavMain({
                     <CollapsibleTrigger asChild>
                       <SidebarMenuButton
                         className={cn(
-                          `flex items-center gap-2   text-sm px-2 py-6  rounded-md`,
-                          "hover:bg-gray-100 text-gray-800",
-                          isActive || isActiveChild
-                            ? "!bg-primary !hover:bg-primary !text-white"
-                            : "hover:bg-gray-100 text-gray-800"
+                          "text-slate-300 hover:bg-slate-800/60 hover:text-slate-100",
+                          (isActive || isActiveChild) &&
+                            "bg-sky-600/20 text-sky-100"
                         )}
                         tooltip={item.title}
                       >
                         <div className="flex w-full items-center gap-2">
-                          {item.icon && (
-                            <item.icon
-                              fillPath={
-                                isActive || isActiveChild ? "#ffff" : "#3B424A"
-                              }
-                            />
-                          )}
-                          <span className="min-w-max flex-1">{item.title}</span>
-                          <ChevronDown className="ml-auto size-4 transition-transform duration-200 group-data-[state=open]/collapsible:rotate-180" />
+                          {item.icon && <item.icon className="h-4 w-4" />}
+                          <span className="flex-1">{item.title}</span>
+                          <ChevronDown className="ml-auto h-4 w-4 transition-transform group-data-[state=open]/collapsible:rotate-180" />
                         </div>
                       </SidebarMenuButton>
                     </CollapsibleTrigger>
@@ -87,15 +71,15 @@ export function NavMain({
                         {item.items?.map((subItem) => (
                           <SidebarMenuSubItem key={subItem.title}>
                             <SidebarMenuSubButton asChild>
-                              <NavLink
-                                className={cn({
-                                  "!bg-primary !hover:bg-primary !text-white":
-                                    pathname === subItem.url,
-                                })}
+                              <Link
                                 to={subItem.url}
+                                className={cn(
+                                  pathname === subItem.url &&
+                                    "bg-sky-600/20 text-sky-100"
+                                )}
                               >
-                                <span>{subItem.title}</span>
-                              </NavLink>
+                                {subItem.title}
+                              </Link>
                             </SidebarMenuSubButton>
                           </SidebarMenuSubItem>
                         ))}
@@ -103,40 +87,18 @@ export function NavMain({
                     </CollapsibleContent>
                   </>
                 ) : (
-                  <>
-                    <SidebarMenuButton tooltip={item.title} asChild>
-                      <NavLink
-                        to={item.url}
-                        className={cn(
-                          `flex items-center gap-2   text-sm px-2 py-6  rounded-md`,
-                          "hover:bg-gray-100 text-gray-800",
-                          pathname === item.url
-                            ? "!bg-primary !hover:bg-primary !text-white"
-                            : "hover:bg-gray-100 text-gray-800"
-                        )}
-                      >
-                        <div className="flex items-center gap-2">
-                          {item.icon && (
-                            <item.icon
-                              fillPath={isActive ? "#ffff" : "#3B424A"}
-                            />
-                          )}
-
-                          <span>{item.title}</span>
-                          {item.badge && (
-                            <Badge
-                              className={cn(
-                                "ml-auto  rounded-full",
-                                item.badgeClasses
-                              )}
-                            >
-                              {item.badge}
-                            </Badge>
-                          )}
-                        </div>
-                      </NavLink>
-                    </SidebarMenuButton>
-                  </>
+                  <SidebarMenuButton tooltip={item.title} asChild>
+                    <Link
+                      to={item.url}
+                      className={cn(
+                        "text-slate-300 hover:bg-slate-800/60 hover:text-slate-100",
+                        isActive && "bg-sky-600/20 text-sky-100"
+                      )}
+                    >
+                      {item.icon && <item.icon className="h-4 w-4" />}
+                      <span>{item.title}</span>
+                    </Link>
+                  </SidebarMenuButton>
                 )}
               </SidebarMenuItem>
             </Collapsible>
@@ -145,4 +107,4 @@ export function NavMain({
       </SidebarMenu>
     </SidebarGroup>
   );
-}
+};

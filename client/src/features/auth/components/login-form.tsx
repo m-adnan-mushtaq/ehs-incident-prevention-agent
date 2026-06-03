@@ -4,7 +4,7 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import { Link } from "react-router";
+import { Link } from "@tanstack/react-router";
 import { ThemeInput } from "@/components/form/ThemeInput";
 import { Lock, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -25,7 +25,7 @@ const LoginForm = ({ isPending, control }: Props) => {
           <FormItem>
             <FormControl>
               <ThemeInput
-                className="rounded-md h-12 text-[1rem]"
+                className="h-11 rounded-md border-slate-600/50 bg-slate-900/50 text-slate-100 text-[1rem]"
                 startIcon={Mail}
                 placeholder="Email"
                 type="email"
@@ -43,7 +43,7 @@ const LoginForm = ({ isPending, control }: Props) => {
           <FormItem>
             <FormControl>
               <ThemeInput
-                className="h-12 rounded-md text-[1rem]"
+                className="h-11 rounded-md border-slate-600/50 bg-slate-900/50 text-slate-100 text-[1rem]"
                 startIcon={Lock}
                 placeholder="Password"
                 type="password"
@@ -55,13 +55,17 @@ const LoginForm = ({ isPending, control }: Props) => {
         )}
       />
       <Link
-        to="/forgot-password"
-        className="font-medium text-gray-600 underline"
+        to="/auth/login"
+        className="text-sm text-slate-500 hover:text-slate-300"
       >
-        Forgot Password?
+        Forgot password? Contact your administrator.
       </Link>
-      <Button disabled={isPending} type="submit" className="w-full">
-        {isPending ? "Logging in..." : "Login"}
+      <Button
+        disabled={isPending}
+        type="submit"
+        className="w-full bg-sky-600 hover:bg-sky-500 text-white"
+      >
+        {isPending ? "Signing in..." : "Sign in"}
       </Button>
     </div>
   );

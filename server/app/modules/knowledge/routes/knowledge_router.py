@@ -53,7 +53,7 @@ async def create_knowledge_route(
 @knowledge_router.get("/")
 @catch_errors
 async def list_knowledge_route(
-    query: Annotated[PaginationParams, Query()],
+    query: PaginationParams = Depends(),
     db: Session = Depends(get_db),
     current_user: User = Depends(authorize()),
     doc_status: Optional[str] = Query(None, alias="status"),

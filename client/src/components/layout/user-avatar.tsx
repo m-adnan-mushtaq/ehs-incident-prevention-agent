@@ -1,30 +1,31 @@
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import { getUserAvatar } from "@/helpers/common";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
-import { IUser } from "@/services/auth.service";
-import { AvatarFallback } from "@radix-ui/react-avatar";
+import type { ICurrentUser } from "@/types/user";
 
 const UserAvatar = ({
   user,
-  size = "h-12 w-12",
+  size = "h-9 w-9",
 }: {
-  user: IUser;
+  user: ICurrentUser | null;
   size?: string;
 }) => {
+  const initials = user?.name
+    ?.split(" ")
+    .map((part) => part[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
+
   return (
     <Avatar
       className={cn(
-        "h-12 w-12 text-sm text-center border border-primary bg-gray-50 flex items-center justify-center rounded-full",
+        "border border-slate-600 bg-slate-800 text-slate-200",
         size
       )}
     >
-      <AvatarImage
-        className="object-contain w-full h-full rounded-full "
-        src={getUserAvatar(user?.profile_photo)}
-        alt={user?.first_name}
-      />
-      <AvatarFallback className="rounded-lg">
-        {user?.first_name?.charAt(0)} {user?.last_name?.charAt(0)}
+      <AvatarImage alt={user?.name} />
+      <AvatarFallback className="rounded-full bg-slate-700 text-xs">
+        {initials || "?"}
       </AvatarFallback>
     </Avatar>
   );

@@ -55,50 +55,52 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
-/* LIGHT MODE */
+/* Enterprise safety operations theme */
 :root {
-  --radius: 0.625rem;
+  --radius: 0.5rem;
 
-  /* Custom palette overrides */
-  --primary: #7364ff;
-  --dark-primary: #4318ff;
-  --primary-light: #f0eeff;
-  --danger: #f65160;
+  --primary: #0ea5e9;
+  --dark-primary: #0284c7;
+  --primary-light: #0c4a6e;
+  --danger: #ef4444;
   --success: #10b981;
-  --warning: #fdc748;
-  --text-light: #91929e;
-  --text-normal: #1d1d1e;
+  --warning: #f59e0b;
+  --text-light: #94a3b8;
+  --text-normal: #e2e8f0;
 
-  /* Existing color space for structure (can keep or convert later) */
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
+  --background: #060b14;
+  --foreground: #e2e8f0;
+  --card: #0c1424;
+  --card-foreground: #e2e8f0;
+  --popover: #0f1729;
+  --popover-foreground: #e2e8f0;
+  --primary-foreground: #f8fafc;
+  --secondary: #1e293b;
+  --secondary-foreground: #cbd5e1;
+  --muted: #1e293b;
+  --accent: #172554;
+  --accent-foreground: #e2e8f0;
+  --destructive: #dc2626;
+  --border: #334155;
+  --input: #334155;
+  --ring: #0ea5e9;
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
   --chart-4: oklch(0.828 0.189 84.429);
   --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --sidebar: #0a1020;
+  --sidebar-foreground: #cbd5e1;
+  --sidebar-primary: #0ea5e9;
+  --sidebar-primary-foreground: #f8fafc;
+  --sidebar-accent: #1e293b;
+  --sidebar-accent-foreground: #e2e8f0;
+  --sidebar-border: #1e293b;
+  --sidebar-ring: #0ea5e9;
+}
+
+.dark {
+  color-scheme: dark;
 }
 
 /* DARK MODE */

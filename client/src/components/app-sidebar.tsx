@@ -1,5 +1,3 @@
-import * as React from "react";
-
 import { NavMain } from "@/components/nav-main";
 import {
   Sidebar,
@@ -8,106 +6,43 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar";
-import SelmtNavLogo from "./layout/logo";
-import { INavLink } from "@/types";
-import {
-  DashboardSvg,
-  DecisionSvg,
-  GovernanceSvg,
-  NotesSvg,
-  QuestionSvg,
-  RequestSvg,
-  RolesSvg,
-  SettingSvg,
-} from "@/assets/svgs";
+import { getNavLinksForRole } from "@/config/navigation";
+import { ROUTE_PATHS } from "@/routes/paths";
+import { getUserRole } from "@/lib/user-role";
+import { useAuthStore } from "@/store/auth";
+import { Shield } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 
-const navLinks: INavLink[] = [
-  {
-    title: "Dashboard",
-    url: "/dashboard",
-    icon: DashboardSvg,
-  },
-  {
-    title: "Governance Management",
-    url: "#",
-    icon: GovernanceSvg,
-    items: [
-      {
-        title: "Third Party Governance",
-        url: "/dashboard/governance",
-      },
-    ],
-  },
-  {
-    title: "Decision Governance",
-    url: "#",
-    icon: DecisionSvg,
-  },
-  {
-    title: "Questioner builder",
-    url: "/dashboard/questionnaire",
-    icon: QuestionSvg,
-    badge: "new",
-    badgeClasses: "bg-success",
-  },
-  {
-    title: "Request Management",
-    url: "#",
-    icon: RequestSvg,
-  },
-  {
-    title: "Task Management",
-    url: "/dashboard/tasks",
-    icon: NotesSvg,
-  },
-  {
-    title: "Users Management",
-    url: "#",
-    icon: RolesSvg,
-    items: [
-      {
-        title: "Users",
-        url: "/dashboard/users",
-      },
-      {
-        title: "Roles",
-        url: "/dashboard/roles",
-      },
-      {
-        title: "Role Types",
-        url: "/dashboard/role-types",
-      },
-      {
-        title: "User Identity",
-        url: "/dashboard/user-identity",
-      },
-    ],
-  },
-];
+export const AppSidebar = ({
+  ...props
+}: React.ComponentProps<typeof Sidebar>) => {
+  const user = useAuthStore((s) => s.user);
+  const navLinks = getNavLinksForRole(getUserRole(user));
 
-const profileLinks: INavLink[] = [
-  {
-    title: "My Profile",
-    url: "/dashboard/profile",
-    icon: SettingSvg,
-    badge: "16+",
-  },
-];
-
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
-    <Sidebar className="bg-white" collapsible="icon" {...props}>
-      <SidebarHeader className="bg-white">
-        <SelmtNavLogo />
+    <Sidebar
+      className="border-r border-slate-800/80 bg-[#0a1020] text-slate-200"
+      collapsible="icon"
+      {...props}
+    >
+      <SidebarHeader className="border-b border-slate-800/60 bg-[#0a1020] px-4 py-5">
+        <Link to={ROUTE_PATHS.app.root} className="flex items-center gap-3">
+          <div className="flex h-9 w-9 items-center justify-center rounded-md bg-sky-600/20 text-sky-400">
+            <Shield className="h-5 w-5" />
+          </div>
+          <div className="flex flex-col group-data-[collapsible=icon]:hidden">
+            <span className="text-sm font-semibold text-slate-100">
+              Safety Operations
+            </span>
+            <span className="text-xs text-slate-500">EHS Platform</span>
+          </div>
+        </Link>
       </SidebarHeader>
-      <SidebarContent className="bg-white">
+      <SidebarContent className="bg-[#0a1020]">
         <NavMain showLabel items={navLinks} />
-        <div className="mt-8">
-          <NavMain items={profileLinks} />
-        </div>
       </SidebarContent>
-      <SidebarFooter></SidebarFooter>
+      <SidebarFooter className="bg-[#0a1020]" />
       <SidebarRail />
     </Sidebar>
   );
-}
+};

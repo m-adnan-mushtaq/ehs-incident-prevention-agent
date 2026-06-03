@@ -1,0 +1,67 @@
+import DocumentsPage from "@/features/documents";
+import SitesPage from "@/features/sites";
+import UsersPage from "@/features/users";
+import VoiceKnowledgePage from "@/features/voice-knowledge";
+import AppShellLayout from "@/layout/app-shell";
+import { createRoute } from "@tanstack/react-router";
+import { requireAdmin, requireAuth } from "./guards";
+import { ROUTE_PATHS } from "./paths";
+import { rootRoute } from "./root.route";
+
+const AppDashboard = () => (
+  <div className="p-8 text-slate-300">
+    <h1 className="text-2xl font-semibold text-slate-100">Safety Operations</h1>
+    <p className="mt-2 max-w-lg text-sm text-slate-400">
+      Select a module from the sidebar to manage sites, field teams, the document
+      library, or voice knowledge notes.
+    </p>
+  </div>
+);
+
+export const appRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: ROUTE_PATHS.app.root,
+  component: AppShellLayout,
+  beforeLoad: requireAuth,
+});
+
+export const appIndexRoute = createRoute({
+  getParentRoute: () => appRoute,
+  path: "/",
+  component: AppDashboard,
+});
+
+export const usersRoute = createRoute({
+  getParentRoute: () => appRoute,
+  path: "/users",
+  component: UsersPage,
+  beforeLoad: requireAdmin,
+});
+
+export const sitesRoute = createRoute({
+  getParentRoute: () => appRoute,
+  path: "/sites",
+  component: SitesPage,
+  beforeLoad: requireAdmin,
+});
+
+export const documentsRoute = createRoute({
+  getParentRoute: () => appRoute,
+  path: "/documents",
+  component: DocumentsPage,
+  beforeLoad: requireAdmin,
+});
+
+export const voiceKnowledgeRoute = createRoute({
+  getParentRoute: () => appRoute,
+  path: "/voice-knowledge",
+  component: VoiceKnowledgePage,
+});
+
+export const appRoutes = [
+  appIndexRoute,
+  usersRoute,
+  sitesRoute,
+  documentsRoute,
+  voiceKnowledgeRoute,
+] as const;

@@ -1,7 +1,9 @@
+import type { LucideIcon } from "lucide-react";
+
 export type INavLink = {
   title: string;
   url: string;
-  icon?: any;
+  icon?: LucideIcon;
   isActive?: boolean;
   badge?: string;
   badgeClasses?: string;

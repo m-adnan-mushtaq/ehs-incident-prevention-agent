@@ -27,7 +27,7 @@ import {
 import { cn } from "@/lib/utils";
 import { Button } from "../ui/button";
 import React from "react";
-import { Inbox, Search } from "lucide-react";
+import { ChevronDown, ChevronUp, Inbox, Search } from "lucide-react";
 import TableSkeleton from "./table-skeleton";
 import DataTableViewOptions from "./columns-visibility";
 import {
@@ -38,7 +38,6 @@ import {
   SelectValue,
 } from "../ui/select";
 import { ThemeInput } from "../form/ThemeInput";
-import { DownSvg, UpSvg } from "@/assets/svgs";
 
 export type PaginationState = {
   pageIndex: number;
@@ -193,27 +192,33 @@ function DataTable<TData, TValue>({
                       )}
                       {header.column.getCanSort() && !skipSorting && (
                         <>
-                          <span className="flex-col">
-                            <UpSvg
+                          <span className="flex flex-col">
+                            <button
+                              type="button"
                               onClick={() => header.column.toggleSorting(false)}
-                              width={7}
-                              height={7}
-                              fill={
-                                header.column.getIsSorted() === "asc"
-                                  ? "rgba(63, 81, 181, 0.7)"
-                                  : `rgba(63, 81, 181, 0.2)`
-                              }
-                            />
-                            <DownSvg
+                              className="p-0"
+                            >
+                              <ChevronUp
+                                className={`h-3 w-3 ${
+                                  header.column.getIsSorted() === "asc"
+                                    ? "text-sky-400"
+                                    : "text-slate-600"
+                                }`}
+                              />
+                            </button>
+                            <button
+                              type="button"
                               onClick={() => header.column.toggleSorting(true)}
-                              width={7}
-                              height={7}
-                              fill={
-                                header.column.getIsSorted() === "desc"
-                                  ? "rgba(63, 81, 181, 0.7)"
-                                  : `rgba(63, 81, 181, 0.2)`
-                              }
-                            />
+                              className="p-0"
+                            >
+                              <ChevronDown
+                                className={`h-3 w-3 ${
+                                  header.column.getIsSorted() === "desc"
+                                    ? "text-sky-400"
+                                    : "text-slate-600"
+                                }`}
+                              />
+                            </button>
                           </span>
                         </>
                       )}

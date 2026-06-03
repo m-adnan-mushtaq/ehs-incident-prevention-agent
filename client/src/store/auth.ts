@@ -1,25 +1,14 @@
-import { IUser } from "@/services/auth.service";
+import type { ICurrentUser } from "@/types/user";
 import { create } from "zustand";
 
 interface AuthState {
-  user: IUser | null;
-  setUser: (user: IUser) => void;
-  updateUser: (user: Partial<IUser>) => void;
+  user: ICurrentUser | null;
+  setUser: (user: ICurrentUser | null) => void;
   resetUser: () => void;
 }
 
-export const useAuthStore = create<AuthState>((set, get) => ({
+export const useAuthStore = create<AuthState>((set) => ({
   user: null,
-  loading: false,
   setUser: (user) => set({ user }),
   resetUser: () => set({ user: null }),
-  updateUser: (user) => {
-    const newUser = structuredClone(get().user || {});
-    set({
-      user: {
-        ...newUser,
-        ...user,
-      } as any,
-    });
-  },
 }));

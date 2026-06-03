@@ -1,142 +1,85 @@
-import { BadgeCheck, Bell, ChevronDown, LogOut, Search } from "lucide-react";
-import {
-  CalendarDottedSvg,
-  HelpCenterSvg,
-  NotificationBellSvg,
-} from "@/assets/svgs";
-import { commonConstants } from "@/constants";
-import { Link } from "react-router";
+import ConfirmationDialog from "@/components/shared/confirmation-dialog";
+import UserAvatar from "@/components/layout/user-avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import UserAvatar from "./user-avatar";
-import { useAuthStore } from "@/store/auth";
-import { useMutation } from "@tanstack/react-query";
-import { authService } from "@/services";
-import { showMutationError } from "@/helpers/common";
+import { TOKEN_PREFIX } from "@/constants/common";
+import { ROUTE_PATHS } from "@/routes/paths";
+import queryClient from "@/config/query-client";
+import { getUserRole, roleLabel } from "@/lib/user-role";
 import { MODAL_TYPE, useModal } from "@/hooks/use-modal";
-import ConfirmationDialog from "../shared/confirmation-dialog";
+import { useAuthStore } from "@/store/auth";
+import { LogOut } from "lucide-react";
+import { apiInstance } from "@/services/_base";
 
 const NavBar = () => {
   const { user, resetUser } = useAuthStore();
-
-  const { mutateAsync, isPending } = useMutation({
-    mutationFn: authService.logout,
-  });
   const { modalState, modalStateHandler } = useModal();
+  const role = getUserRole(user);
 
-  const handleLogout = async () => {
-    try {
-      await mutateAsync();
-      localStorage.removeItem(commonConstants.TOKEN_PREFIX);
-      resetUser();
-    } catch (error) {
-      showMutationError(error);
-    }
+  const handleLogout = () => {
+    localStorage.removeItem(TOKEN_PREFIX);
+    delete apiInstance.defaults.headers.Authorization;
+    resetUser();
+    queryClient.clear();
+    window.location.href = ROUTE_PATHS.auth.login;
   };
 
   return (
-    <>
-      <div className="flex w-full mr-4 justify-between items-center py-4 px-4 md:px-8">
-        <div className="flex-1 hidden lg:block">
-          <div className="w-full max-w-[400px] border rounded-md relative bg-white">
-            <input
-              placeholder="Search for anything..."
-              type="text"
-              className={
-                "peer flex h-12 outline-0 w-full bg-white rounded-md border-none  py-4 px-8 text-sm ring-0 file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-lightBlue focus-visible:ring-offset-0 disabled:cursor-not-allowed disabled:opacity-50 pl-10 "
-              }
-            />
-            <Search
-              className={
-                "absolute left-3 text-gray-500 top-1/2 transform -translate-y-1/2 h-[22px] w-[22px] "
-              }
-            />
-          </div>
-        </div>
-        <div className="flex-1 justify-end  flex item-center gap-4">
-          <button className="cursor-pointer hidden sm:block">
-            <CalendarDottedSvg fillPath={commonConstants.SVG_SECONDARY} />
-          </button>
-          <button className="cursor-pointer">
-            <HelpCenterSvg fillPath={commonConstants.SVG_SECONDARY} />
-          </button>
-          <button className="cursor-pointer">
-            <NotificationBellSvg fillPath={commonConstants.SVG_SECONDARY} />
-          </button>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <div className="cursor-pointer relative min-w-fit flex items-center gap-4">
-                <UserAvatar user={user || ({} as any)} />
-                <span className="bottom-0 left-[36px] absolute  w-3.5 h-3.5 bg-green-600 border-2 border-white dark:border-gray-800 rounded-full"></span>
-                <div className="grid flex-1 min-w-fit text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">
-                    {user?.first_name}
-                  </span>
-                  <span className="truncate text-xs">
-                    {user?.admin ? "Admin" : "Employee"}
-                  </span>
-                </div>
-                <ChevronDown className="text-muted-foreground self-end" />
-              </div>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56 p-4">
-              <DropdownMenuLabel className="p-0 font-normal">
-                <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">
-                    {`${user?.first_name} ${user?.last_name}`}
-                  </span>
-                  <span className="truncate text-xs">{user?.email}</span>
-                </div>
-              </DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuGroup>
-                <DropdownMenuItem asChild className="cursor-pointer">
-                  <Link to="/dashboard/profile">
-                    <BadgeCheck />
-                    Profile
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild className="cursor-pointer">
-                  <Link to="#">
-                    <Bell />
-                    Notifications
-                  </Link>
-                </DropdownMenuItem>
-              </DropdownMenuGroup>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem
-                onClick={() => {
-                  modalStateHandler(MODAL_TYPE.DELETE, true);
-                }}
-                className="cursor-pointer"
-              >
-                <LogOut />
-                Log out
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
+    <div className="flex w-full items-center justify-between px-4 md:px-8 py-3">
+      <div className="hidden lg:block">
+        <p className="text-xs uppercase tracking-wide text-slate-500">
+          Tenant
+        </p>
+        <p className="text-sm font-medium text-slate-200">
+          {user?.tenant?.name ?? "Safety Operations"}
+        </p>
       </div>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <button
+            type="button"
+            className="ml-auto flex cursor-pointer items-center gap-3 rounded-md border border-slate-700/60 bg-slate-900/40 px-3 py-2"
+          >
+            <UserAvatar user={user} />
+            <div className="hidden text-left text-sm sm:block">
+              <p className="font-medium text-slate-100">{user?.name}</p>
+              <p className="text-xs text-slate-500">
+                {role ? roleLabel[role] : "User"}
+              </p>
+            </div>
+          </button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="w-56 border-slate-700 bg-slate-900 text-slate-100">
+          <DropdownMenuLabel className="font-normal">
+            <p className="font-medium">{user?.name}</p>
+            <p className="text-xs text-slate-400">{user?.email}</p>
+          </DropdownMenuLabel>
+          <DropdownMenuSeparator className="bg-slate-700" />
+          <DropdownMenuItem
+            className="cursor-pointer focus:bg-slate-800"
+            onClick={() => modalStateHandler(MODAL_TYPE.DELETE, true)}
+          >
+            <LogOut className="mr-2 h-4 w-4" />
+            Sign out
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
 
       <ConfirmationDialog
         open={modalState.delete}
-        handleClose={() => {
-          modalStateHandler(MODAL_TYPE.DELETE, false);
-        }}
+        handleClose={() => modalStateHandler(MODAL_TYPE.DELETE, false)}
         handleDelete={handleLogout}
-        title="Are you sure? You will be logged out."
-        deleteBtnText="Logout"
-        deleteVariant={"default"}
-        loading={isPending}
+        title="Sign out of Safety Operations?"
+        deleteBtnText="Sign out"
+        deleteVariant="default"
       />
-    </>
+    </div>
   );
 };
 
