@@ -1,4 +1,3 @@
-import os
 import re
 import uuid
 from pathlib import Path
@@ -8,6 +7,7 @@ from fastapi import UploadFile
 from app.core.config_loader import settings
 from app.core.s3_client import get_s3_client
 from app.modules.document.constants import LOCAL_DOCUMENT_UPLOAD_DIR
+from app.modules.document.models.document import Document
 
 
 def ensure_upload_dir(path: str | Path) -> None:
@@ -55,6 +55,26 @@ def _resolve_file_type(file: UploadFile, filename: str) -> str | None:
         return file.content_type
     suffix = Path(filename).suffix.lower()
     return suffix.lstrip(".") or None
+
+
+def resolve_document_file_path(document: Document) -> str:
+    """Return a local PDF path, downloading from S3 when needed (e.g. Celery worker)."""
+    if document.temp_path and Path(document.temp_path).is_file():
+        return document.temp_path
+    if not document.file_url:
+        raise ValueError("Document file is not available for processing")
+
+    local_path = document.temp_path or str(
+        LOCAL_DOCUMENT_UPLOAD_DIR / Path(document.file_url).name
+    )
+    ensure_upload_dir(Path(local_path).parent)
+    client = get_s3_client()
+    client.download_file(
+        settings.AWS_S3_BUCKET_NAME,
+        document.file_url,
+        local_path,
+    )
+    return local_path
 
 
 async def handle_document_upload(file: UploadFile, tenant_id) -> dict:

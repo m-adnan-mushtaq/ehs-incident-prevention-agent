@@ -57,3 +57,6 @@ app.mount("/socket.io/", socket_manager.app)
 @app.get("/health", tags=["Health Checks"])
 def read_root():
     return {"status": "ok"}
+
+
+print(f"VOYAGE_API_KEY: {settings.VOYAGE_API_KEY}")

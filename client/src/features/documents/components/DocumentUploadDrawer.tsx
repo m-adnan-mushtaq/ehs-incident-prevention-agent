@@ -29,11 +29,12 @@ export const DocumentUploadDrawer = ({
       <SheetHeader>
         <SheetTitle>Upload safety document</SheetTitle>
         <SheetDescription className="text-slate-500">
-          Add approved safety material to the searchable knowledge base. Uploaded
-          files are processed into citations the assistant can use in answers.
+          Add approved safety material to the searchable knowledge base.
+          Uploaded files are processed into citations the assistant can use in
+          answers.
         </SheetDescription>
       </SheetHeader>
-      <div className="mt-6">
+      <div className="mt-6 px-4">
         <DocumentForm
           sites={sites}
           loading={loading}

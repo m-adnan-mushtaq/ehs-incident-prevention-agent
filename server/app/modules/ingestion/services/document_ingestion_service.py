@@ -1,4 +1,3 @@
-import os
 import uuid
 
 from sqlalchemy import select
@@ -7,6 +6,7 @@ from sqlalchemy.orm import selectinload
 
 from app.modules.document.models.document import Document
 from app.modules.document.schemas.document import DocumentStatus, SourceScope
+from app.modules.document.services.upload_service import resolve_document_file_path
 from app.modules.ingestion.constants import (
     CHUNK_STATUS_ACTIVE,
     SOURCE_TYPE_DOCUMENT,
@@ -41,14 +41,13 @@ async def ingest_document(
     document = await _load_document(db, document_id)
     if not document:
         raise ValueError("Document not found")
-    if not document.temp_path or not os.path.exists(document.temp_path):
-        raise ValueError("Document temp_path is missing or file not found")
+    local_path = resolve_document_file_path(document)
 
     document.status = DocumentStatus.PROCESSING.value
     document.processing_error = None
     await db.flush()
 
-    pages = extract_pdf_pages(document.temp_path)
+    pages = extract_pdf_pages(local_path)
     chunks = chunk_pages(pages)
     if not chunks:
         raise ValueError("No text extracted from PDF")

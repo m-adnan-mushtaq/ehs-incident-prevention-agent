@@ -80,7 +80,7 @@ export const DocumentForm = ({
           form.reset();
           onClose();
         })}
-        className="flex flex-col gap-4"
+        className="flex flex-col gap-4 px-4"
       >
         <Alert className="border-blue-200 bg-blue-50 text-blue-900">
           <AlertDescription className="text-sm leading-6">
