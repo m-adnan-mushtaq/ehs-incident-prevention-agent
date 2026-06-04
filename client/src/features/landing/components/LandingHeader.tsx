@@ -18,17 +18,28 @@ export const LandingHeader = () => {
   return (
     <header
       className={cn(
-        "fixed top-0 z-50 flex h-16 w-full items-center justify-between border-b border-safety-outline bg-white/80 px-6 backdrop-blur-md",
-        scrolled && "shadow-soft border-b-safety-brand/10"
+        "fixed top-0 z-50 flex h-16 w-full items-center justify-between px-6 backdrop-blur-md transition-colors duration-300",
+        scrolled
+          ? "border-b border-safety-outline bg-white/95 shadow-soft"
+          : "border-b border-white/10 bg-safety-deep/50"
       )}
     >
-      <BrandLogo to={ROUTE_PATHS.root} size="md" />
+      <BrandLogo
+        to={ROUTE_PATHS.root}
+        size="md"
+        variant={scrolled ? "default" : "inverse"}
+      />
       <nav className="hidden items-center gap-6 xl:flex">
         {LANDING_NAV.map((item) => (
           <a
             key={item.href}
             href={item.href}
-            className="text-sm font-medium text-safety-muted transition-colors hover:text-safety-brand"
+            className={cn(
+              "text-sm font-medium transition-colors",
+              scrolled
+                ? "text-safety-muted hover:text-safety-brand"
+                : "text-slate-300 hover:text-white"
+            )}
           >
             {item.label}
           </a>
@@ -37,13 +48,18 @@ export const LandingHeader = () => {
       <div className="flex items-center gap-4">
         <Link
           to={ROUTE_PATHS.auth.login}
-          className="text-sm font-semibold text-safety-ink transition-colors hover:text-safety-brand"
+          className={cn(
+            "text-sm font-semibold transition-colors",
+            scrolled
+              ? "text-safety-ink hover:text-safety-brand"
+              : "text-white hover:text-blue-200"
+          )}
         >
           Sign In
         </Link>
         <Link
           to={ROUTE_PATHS.auth.adminSignup}
-          className="rounded-lg bg-safety-brand px-6 py-2 text-sm font-semibold text-white shadow-sm transition-all hover:bg-blue-700"
+          className="rounded-lg bg-safety-brand px-6 py-2 text-sm font-semibold text-white shadow-sm transition-all hover:bg-blue-600"
         >
           Sign Up
         </Link>

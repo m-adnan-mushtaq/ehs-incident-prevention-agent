@@ -35,7 +35,7 @@ export const NavMain = ({
   return (
     <SidebarGroup>
       {showLabel && (
-        <SidebarGroupLabel className="px-2 text-xs uppercase tracking-wide text-safety-muted">
+        <SidebarGroupLabel className="px-2 text-xs uppercase tracking-wide text-slate-500">
           Modules
         </SidebarGroupLabel>
       )}

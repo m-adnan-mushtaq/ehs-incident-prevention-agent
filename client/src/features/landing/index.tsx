@@ -13,7 +13,7 @@ import { LandingUseCases } from "@/features/landing/components/LandingUseCases";
 const LandingPage = () => (
   <div className="min-h-screen bg-white text-safety-ink selection:bg-safety-brand/20 selection:text-safety-brand">
     <LandingHeader />
-    <main className="pt-16">
+    <main>
       <LandingHero />
       <LandingProblem />
       <LandingSiteAware />
