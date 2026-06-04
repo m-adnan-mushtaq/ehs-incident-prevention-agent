@@ -10,6 +10,8 @@ from app.modules.document.models.document import Document
 from app.modules.sites.models.site import Site
 from app.modules.knowledge.models.knowledge_object import KnowledgeObject
 from app.modules.ingestion.models.knowledge_chunk import KnowledgeChunk
+from app.modules.incident.models.incident import Incident
+from app.modules.chat.models.chat import ChatSession, ChatMessage
 
 ROLES = [
     ("admin", "Administrator with full access"),
