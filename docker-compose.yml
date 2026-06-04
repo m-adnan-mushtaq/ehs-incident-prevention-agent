@@ -1,0 +1,41 @@
+services:
+  ehs-client:
+    container_name: ehs-client
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: ${VITE_API_URL}
+        VITE_MEDIA_BASE_URL: ${VITE_MEDIA_BASE_URL}
+    restart: unless-stopped
+    networks:
+      - divescale-net
+
+  ehs-server:
+    container_name: ehs-server
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    restart: unless-stopped
+    networks:
+      - divescale-net
+
+  ehs-redis:
+    image: redis:7-alpine
+    container_name: ehs-redis
+    restart: unless-stopped
+    networks:
+      divescale-net:
+        aliases:
+          - ehs-redis
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+networks:
+  divescale-net:
+    external: true
