@@ -1,6 +1,7 @@
 import Container from "@/components/layout/container";
 import DataTable from "@/components/shared/data-table";
 import ConfirmationDialog from "@/components/shared/confirmation-dialog";
+import { PageHeader, SectionCard } from "@/components/shared/safety-ui";
 import withPaginatedQuery, {
   PaginationWrapperProps,
 } from "@/components/hoc/withPaginatedQuery";
@@ -9,7 +10,7 @@ import { MODAL_TYPE, useModal } from "@/hooks/use-modal";
 import { documentsService, sitesService } from "@/services";
 import type { IDocument } from "@/types/document";
 import { Button } from "@/components/ui/button";
-import { Upload } from "lucide-react";
+import { FileText, Upload } from "lucide-react";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useColumns } from "./hooks/useColumns";
@@ -62,35 +63,37 @@ const DocumentsPage = ({
 
   return (
     <Container className="pb-10 text-slate-900">
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-2xl font-semibold text-slate-950">
-            Document Library
-          </h2>
-          <p className="text-sm text-slate-500">
-            Safety documents processed into your site knowledge base.
-          </p>
-        </div>
-        <Button onClick={() => modalStateHandler(MODAL_TYPE.CREATE, true)}>
-          <Upload className="h-4 w-4" /> Upload document
-        </Button>
-      </div>
-      <div className="rounded-lg border border-slate-200 bg-white p-3 shadow-sm">
-      <DataTable
-        columns={columns as never}
-        data={data}
-        total={totalRecords}
-        sorting={sortModel}
-        setSorting={setSortModel}
-        loading={isLoading}
-        pagination={paginationModel}
-        setPagination={setPaginationModel}
-        visiblePagination
-        emptyPlaceholder="No documents have been uploaded yet. Upload safety documents to begin building the site knowledge base."
-        search={search}
-        onSearch={handleSearch}
+      <PageHeader
+        eyebrow="Approved source library"
+        title="Document Library"
+        description="Upload SOPs, manuals, checklists, policies, and regulatory guidance for searchable safety knowledge."
+        icon={FileText}
+        actions={
+          <Button onClick={() => modalStateHandler(MODAL_TYPE.CREATE, true)}>
+            <Upload className="h-4 w-4" /> Upload document
+          </Button>
+        }
       />
-      </div>
+      <SectionCard
+        title="Safety documents"
+        description="Processing status, source scope, and document types used by the assistant."
+        contentClassName="p-3"
+      >
+        <DataTable
+          columns={columns as never}
+          data={data}
+          total={totalRecords}
+          sorting={sortModel}
+          setSorting={setSortModel}
+          loading={isLoading}
+          pagination={paginationModel}
+          setPagination={setPaginationModel}
+          visiblePagination
+          emptyPlaceholder="No documents have been uploaded yet. Upload safety documents to begin building the site knowledge base."
+          search={search}
+          onSearch={handleSearch}
+        />
+      </SectionCard>
       <DocumentUploadDrawer
         open={modalState.create}
         sites={sites}

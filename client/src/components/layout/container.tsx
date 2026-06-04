@@ -8,7 +8,7 @@ const Container = ({
   return (
     <div
       className={cn(
-        "my-4  px-4 md:px-8 max-w-full space-y-4 md:my-14 max-h-full overflow-auto",
+        "max-h-full max-w-full space-y-5 overflow-auto px-4 py-5 md:px-8 md:py-8",
         className
       )}
     >

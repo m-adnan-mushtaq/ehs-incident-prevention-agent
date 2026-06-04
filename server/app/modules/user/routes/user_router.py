@@ -41,8 +41,9 @@ async def user_list(
 @user_router.get('/me')
 @catch_errors
 async def get_me(current_user: User = Depends(authorize())):
-    current_user.password = None
-    return format_response(current_user, status.HTTP_200_OK)
+    user_response = {k: v for k,
+                     v in current_user.__dict__.items() if k != "password"}
+    return format_response(user_response, status.HTTP_200_OK)
 
 
 @user_router.get('/{user_id}')

@@ -1,8 +1,7 @@
 import queryClient from "@/config/query-client";
-import { CACHE_KEYS, TOKEN_PREFIX } from "@/constants/common";
+import { CACHE_KEYS } from "@/constants/common";
 import type { ILoginPayload } from "@/types/auth";
 import { authService } from "@/services";
-import { apiInstance } from "@/services/_base";
 import { useAuthStore } from "@/store/auth";
 import { getUserRole } from "@/lib/user-role";
 import { useMutation } from "@tanstack/react-query";
@@ -20,15 +19,14 @@ const getPostLoginPath = (role: ReturnType<typeof getUserRole>) => {
 };
 
 export const useLogin = () => {
-  const setUser = useAuthStore((s) => s.setUser);
+  const { setUser, activateSession } = useAuthStore();
   const navigate = useNavigate();
 
   return useMutation({
     mutationFn: (data: ILoginPayload) => authService.login(data),
     onSuccess: async (result) => {
       const token = result.tokens.access.token;
-      localStorage.setItem(TOKEN_PREFIX, token);
-      apiInstance.defaults.headers.Authorization = `Bearer ${token}`;
+      activateSession(token);
       setUser(result.user);
       await queryClient.invalidateQueries({ queryKey: CACHE_KEYS.auth.me });
       toast.success("Signed in successfully.");

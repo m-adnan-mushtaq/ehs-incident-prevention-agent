@@ -25,8 +25,8 @@ const MODE_META: Record<
   },
   image_check: {
     icon: Camera,
-    accent: "bg-violet-600 text-white",
-    ring: "ring-violet-500",
+    accent: "bg-emerald-600 text-white",
+    ring: "ring-emerald-500",
   },
 };
 
@@ -46,8 +46,8 @@ export const ChatModeTabs = ({ value, onChange }: Props) => (
           className={cn(
             "flex w-full items-start gap-3 rounded-lg border p-3 text-left transition",
             selected
-              ? cn("border-transparent shadow-sm ring-2", meta.ring)
-              : "border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50"
+              ? cn("border-white bg-white shadow-sm ring-2", meta.ring)
+              : "border-slate-200 bg-slate-50 hover:border-slate-300 hover:bg-white"
           )}
         >
           <span

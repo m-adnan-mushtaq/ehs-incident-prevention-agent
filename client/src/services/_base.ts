@@ -1,5 +1,5 @@
-import queryClient from "@/config/query-client";
 import { TOKEN_PREFIX } from "@/constants/common";
+import { shouldSkipAuthInterceptor } from "@/lib/logout";
 import { useAuthStore } from "@/store/auth";
 import axios from "axios";
 
@@ -29,10 +29,11 @@ apiInstance.interceptors.response.use(
     return response;
   },
   (error) => {
-    if (error.response?.status === 403 || error.response?.status === 401) {
-      queryClient.resetQueries();
-      useAuthStore.setState({ user: null });
-      localStorage.removeItem(TOKEN_PREFIX);
+    if (
+      (error.response?.status === 403 || error.response?.status === 401) &&
+      !shouldSkipAuthInterceptor()
+    ) {
+      useAuthStore.getState().resetUser();
     }
     return Promise.reject(error);
   }

@@ -3,6 +3,7 @@ import ControlledInput from "@/components/form/ControlledInput";
 import ControlledSelect from "@/components/form/ControlledSelect";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import type { ISite } from "@/types/site";
 import type { IUploadDocumentPayload, SourceScope } from "@/types/document";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -79,9 +80,29 @@ export const DocumentForm = ({
           form.reset();
           onClose();
         })}
-        className="flex flex-col gap-4 mx-4"
+        className="flex flex-col gap-4"
       >
+        <Alert className="border-blue-200 bg-blue-50 text-blue-900">
+          <AlertDescription className="text-sm leading-6">
+            Upload SOPs, manuals, checklists, policies, or regulatory guidance.
+            Safety Operations AI will process the file into searchable,
+            citation-ready safety knowledge.
+          </AlertDescription>
+        </Alert>
         <ControlledInput name="title" control={form.control} label="Title" />
+        <ControlledSelect
+          name="document_type"
+          control={form.control}
+          label="Document type"
+          placeholder="Select type"
+          options={[
+            { label: "SOP", value: "sop" },
+            { label: "Manual", value: "manual" },
+            { label: "Checklist", value: "checklist" },
+            { label: "Policy", value: "policy" },
+            { label: "Regulatory Guidance", value: "regulatory_guidance" },
+          ]}
+        />
         <ControlledSelect
           name="source_scope"
           control={form.control}
@@ -100,12 +121,6 @@ export const DocumentForm = ({
             options={sites.map((s) => ({ label: s.name, value: s.id }))}
           />
         )}
-        <ControlledInput
-          name="document_type"
-          control={form.control}
-          label="Document type"
-          placeholder="SOP, manual, checklist..."
-        />
         <ControlledInput name="topic" control={form.control} label="Topic" />
         <ControlledInput
           name="description"

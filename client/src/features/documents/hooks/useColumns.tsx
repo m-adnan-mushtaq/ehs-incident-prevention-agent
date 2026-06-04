@@ -1,4 +1,5 @@
 import { StatusBadge } from "@/components/shared/status-badge";
+import { Badge } from "@/components/ui/badge";
 import type { TableActions } from "@/types";
 import type { IDocument } from "@/types/document";
 import { formatDateTime, toTitleCase } from "@/helpers/common";
@@ -6,6 +7,26 @@ import type { ColumnDef } from "@tanstack/react-table";
 import { AlertTriangle, Eye, FileText, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useMemo } from "react";
+
+const documentTypeLabel = (value?: string | null) => {
+  const key = (value || "").toLowerCase().replace(/[\s-]+/g, "_");
+  const labels: Record<string, string> = {
+    sop: "SOP",
+    manual: "Manual",
+    checklist: "Checklist",
+    policy: "Policy",
+    regulatory_guidance: "Regulatory Guidance",
+  };
+  return labels[key] ?? (value ? toTitleCase(value) : "Unclassified");
+};
+
+const scopeLabel = (value?: string | null) => {
+  const key = (value || "").toLowerCase();
+  if (key === "global") return "Global";
+  if (key === "company") return "Company";
+  if (key === "site") return "Site";
+  return value ? toTitleCase(value) : "Global";
+};
 
 export const useColumns = (actions: TableActions<IDocument>) => {
   const columns = useMemo<ColumnDef<IDocument>[]>(
@@ -28,12 +49,20 @@ export const useColumns = (actions: TableActions<IDocument>) => {
       {
         accessorKey: "document_type",
         header: "Type",
-        cell: ({ row }) => row.original.document_type || "—",
+        cell: ({ row }) => (
+          <Badge variant="outline" className="border-blue-200 bg-blue-50 text-blue-700">
+            {documentTypeLabel(row.original.document_type)}
+          </Badge>
+        ),
       },
       {
         accessorKey: "source_scope",
         header: "Scope",
-        cell: ({ row }) => toTitleCase(row.original.source_scope),
+        cell: ({ row }) => (
+          <Badge variant="outline" className="border-slate-200 bg-slate-50 text-slate-700">
+            {scopeLabel(row.original.source_scope)}
+          </Badge>
+        ),
       },
       {
         id: "status",
@@ -63,16 +92,18 @@ export const useColumns = (actions: TableActions<IDocument>) => {
             <Button
               size="icon"
               variant="ghost"
-              className="text-slate-500 hover:text-blue-700"
+              className="text-slate-500 hover:bg-blue-50 hover:text-blue-700"
               onClick={() => actions.handleView?.(row.original)}
+              aria-label="View document"
             >
               <Eye className="h-4 w-4" />
             </Button>
             <Button
               size="icon"
               variant="ghost"
-              className="text-slate-500 hover:text-red-600"
+              className="text-slate-500 hover:bg-red-50 hover:text-red-600"
               onClick={() => actions.handleDelete?.(row.original)}
+              aria-label="Archive document"
             >
               <Trash2 className="h-4 w-4" />
             </Button>

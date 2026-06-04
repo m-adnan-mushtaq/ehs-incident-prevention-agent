@@ -70,6 +70,29 @@ export const useColumns = ({
         cell: ({ row }) => row.original.asset_name || "—",
       },
       {
+        accessorKey: "task_type",
+        header: "Task",
+        cell: ({ row }) => row.original.task_type || "—",
+      },
+      {
+        accessorKey: "root_cause",
+        header: "Root Cause",
+        cell: ({ row }) => (
+          <span className="line-clamp-2 block max-w-56 text-sm text-slate-600">
+            {row.original.root_cause || "—"}
+          </span>
+        ),
+      },
+      {
+        accessorKey: "corrective_action",
+        header: "Corrective Action",
+        cell: ({ row }) => (
+          <span className="line-clamp-2 block max-w-56 text-sm text-slate-600">
+            {row.original.corrective_action || "—"}
+          </span>
+        ),
+      },
+      {
         accessorKey: "occurred_at",
         header: "Occurred At",
         cell: ({ row }) =>
@@ -95,7 +118,7 @@ export const useColumns = ({
               <Button
                 size="icon"
                 variant="ghost"
-                className="text-slate-500 hover:text-blue-700"
+                className="text-slate-500 hover:bg-blue-50 hover:text-blue-700"
                 onClick={() => handleView?.(incident)}
                 aria-label="View incident"
               >
@@ -105,7 +128,7 @@ export const useColumns = ({
                 <Button
                   size="icon"
                   variant="ghost"
-                  className="text-slate-500 hover:text-blue-700"
+                  className="text-slate-500 hover:bg-blue-50 hover:text-blue-700"
                   onClick={() => handleEdit?.(incident)}
                   aria-label="Edit incident"
                 >
@@ -116,7 +139,7 @@ export const useColumns = ({
                 <Button
                   size="icon"
                   variant="ghost"
-                  className="text-slate-500 hover:text-red-600"
+                  className="text-slate-500 hover:bg-red-50 hover:text-red-600"
                   onClick={() => handleDelete?.(incident)}
                   aria-label="Archive incident"
                 >

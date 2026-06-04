@@ -1,5 +1,6 @@
 import Container from "@/components/layout/container";
 import ConfirmationDialog from "@/components/shared/confirmation-dialog";
+import { PageHeader } from "@/components/shared/safety-ui";
 import withPaginatedQuery, {
   PaginationWrapperProps,
 } from "@/components/hoc/withPaginatedQuery";
@@ -111,24 +112,18 @@ const IncidentsPage = ({
 
   return (
     <Container className="pb-10 text-slate-900">
-      <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-        <div>
-          <h1 className="flex items-center gap-2 text-2xl font-semibold text-slate-950">
-            <AlertTriangle className="h-6 w-6 text-amber-600" />
-            Incidents
-          </h1>
-          <p className="mt-1 max-w-2xl text-sm text-slate-500">
-            Report, review, and learn from incidents and near misses.
-          </p>
-        </div>
-        <Button
-          className="shrink-0"
-          onClick={() => setCreateModalOpen(true)}
-        >
-          <Plus className="h-4 w-4" />
-          Report Incident
-        </Button>
-      </div>
+      <PageHeader
+        eyebrow="Incident learning system"
+        title="Incidents"
+        description="Report, review, and learn from incidents and near misses before similar work starts again."
+        icon={AlertTriangle}
+        actions={
+          <Button className="shrink-0" onClick={() => setCreateModalOpen(true)}>
+            <Plus className="h-4 w-4" />
+            Report Incident
+          </Button>
+        }
+      />
 
       <IncidentsTable
         data={data}

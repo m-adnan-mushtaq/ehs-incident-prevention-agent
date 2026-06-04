@@ -29,8 +29,8 @@ export const DocumentUploadDrawer = ({
       <SheetHeader>
         <SheetTitle>Upload safety document</SheetTitle>
         <SheetDescription className="text-slate-500">
-          Upload SOPs, safety manuals, checklists, or approved EHS documents for
-          processing.
+          Add approved safety material to the searchable knowledge base. Uploaded
+          files are processed into citations the assistant can use in answers.
         </SheetDescription>
       </SheetHeader>
       <div className="mt-6">

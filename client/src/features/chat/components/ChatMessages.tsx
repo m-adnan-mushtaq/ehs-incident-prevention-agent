@@ -72,7 +72,30 @@ export const ChatMessages = ({
 
         {showLiveAssistant &&
           !messages.some((m) => m.id === streamingId) &&
-          liveState.finalResponse && (
+          liveState.finalResponse &&
+          liveState.finalResponse.response_profile === "small_talk" && (
+            <ChatMessageBubble
+              message={{
+                id: liveState.finalResponse.assistant_message_id,
+                chat_session_id: liveState.finalResponse.session_id,
+                tenant_id: "",
+                role: "assistant",
+                content:
+                  liveState.streamingText || liveState.finalResponse.answer,
+                message_type: "text",
+                confidence_score: liveState.finalResponse.confidence_score,
+                rag_metadata: {
+                  response_profile: liveState.finalResponse.response_profile,
+                  mode: liveState.finalResponse.mode,
+                },
+              }}
+            />
+          )}
+
+        {showLiveAssistant &&
+          !messages.some((m) => m.id === streamingId) &&
+          liveState.finalResponse &&
+          liveState.finalResponse.response_profile !== "small_talk" && (
             <StructuredAssistantResponse
               mode={mode ?? liveState.finalResponse.mode}
               card={liveState.finalResponse.card}

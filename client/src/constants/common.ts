@@ -20,6 +20,7 @@ export const CACHE_KEYS = {
   documents: {
     all: ["documents"] as const,
     paginated: (params: unknown) => ["documents", "paginated", params] as const,
+    detail: (id: string) => ["documents", "detail", id] as const,
   },
   knowledgeObjects: {
     all: ["knowledge-objects"] as const,
@@ -29,7 +30,8 @@ export const CACHE_KEYS = {
   },
   voiceKnowledge: {
     all: ["voice-knowledge"] as const,
-    paginated: (params: unknown) => ["voice-knowledge", "paginated", params] as const,
+    paginated: (params: unknown) =>
+      ["voice-knowledge", "paginated", params] as const,
   },
   incidents: {
     all: ["incidents"] as const,

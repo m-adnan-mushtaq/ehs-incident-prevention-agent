@@ -41,6 +41,10 @@ class ChatMessageResponse(BaseModel):
     message_type: str
     confidence_score: Decimal | None = None
     rag_metadata: dict[str, Any] | None = None
+    image_key: str | None = None
+    image_file_name: str | None = None
+    image_content_type: str | None = None
+    image_size_kb: int | None = None
     created_at: datetime
     updated_at: datetime
 
@@ -79,9 +83,9 @@ class ChatFinalPayload(BaseModel):
     user_message_id: UUID
     assistant_message_id: UUID
     mode: str
+    response_profile: str | None = None
     answer: str
     card: dict[str, Any]
     citations: list[SourceCitation]
     confidence_score: float
     rag_metadata: dict[str, Any]
-

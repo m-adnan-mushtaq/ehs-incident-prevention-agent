@@ -1,23 +1,23 @@
 import { AppSidebar } from "@/components/app-sidebar";
 import NavBar from "@/components/layout/navbar";
+import ScreenLoader from "@/components/layout/screen-loader";
+import { useCurrentUser } from "@/features/auth/hooks/useCurrentUser";
 import {
   SidebarInset,
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { useCurrentUser } from "@/features/auth/hooks/useCurrentUser";
-import ScreenLoader from "@/components/layout/screen-loader";
-import { TOKEN_PREFIX } from "@/constants/common";
 import { ROUTE_PATHS } from "@/routes/paths";
+import { useAuthStore } from "@/store/auth";
 import { Menu } from "lucide-react";
-import { Outlet, redirect, useRouterState } from "@tanstack/react-router";
+import { Navigate, Outlet } from "@tanstack/react-router";
 
 const AppShellLayout = () => {
+  const sessionActive = useAuthStore((s) => s.sessionActive);
   const { user, isLoading, isFetching } = useCurrentUser();
-  const pathname = useRouterState({ select: (s) => s.location.pathname });
 
-  if (!localStorage.getItem(TOKEN_PREFIX)) {
-    throw redirect({ to: ROUTE_PATHS.auth.login, search: { redirect: pathname } });
+  if (!sessionActive) {
+    return <Navigate to={ROUTE_PATHS.auth.login} replace />;
   }
 
   if (isLoading || isFetching) {
@@ -25,22 +25,22 @@ const AppShellLayout = () => {
   }
 
   if (!user) {
-    throw redirect({ to: ROUTE_PATHS.auth.login });
+    return <Navigate to={ROUTE_PATHS.auth.login} replace />;
   }
 
   return (
     <SidebarProvider>
       <AppSidebar />
-      <SidebarInset className="max-w-full overflow-auto bg-slate-50">
-        <header className="flex h-16 shrink-0 items-center gap-2 border-b border-slate-200 bg-white/95 backdrop-blur">
+      <SidebarInset className="max-w-full overflow-auto bg-safety-surface">
+        <header className="flex h-16 shrink-0 items-center gap-2 border-b border-safety-outline bg-white/95 backdrop-blur">
           <div className="flex w-full items-center px-4 lg:hidden">
-            <SidebarTrigger className="text-slate-700">
+            <SidebarTrigger className="text-safety-ink">
               <Menu />
             </SidebarTrigger>
           </div>
           <NavBar />
         </header>
-        <main className="flex-1 overflow-auto p-0 min-h-0">
+        <main className="min-h-0 flex-1 overflow-auto p-0">
           <Outlet />
         </main>
       </SidebarInset>

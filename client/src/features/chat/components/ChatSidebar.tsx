@@ -29,13 +29,14 @@ export const ChatSidebar = ({
   );
 
   return (
-    <aside className="hidden h-full min-h-0 w-80 shrink-0 flex-col border-r border-slate-200 bg-slate-50/50 lg:flex">
+    <aside className="hidden h-full min-h-0 w-[21rem] shrink-0 flex-col border-r border-slate-200 bg-slate-100 lg:flex">
       <div className="shrink-0 border-b border-slate-200 bg-white">
         <div className="px-3 pt-3">
-          <p className="text-xs font-semibold text-slate-900">Assistant mode</p>
+          <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+            Assistant mode
+          </p>
           <p className="mt-0.5 text-[11px] text-slate-500">
-            Pick how the assistant should respond. History below is filtered to
-            this mode.
+            Select the safety workflow. Chat history below follows this mode.
           </p>
         </div>
         <ChatModeTabs value={selectedMode} onChange={onModeChange} />

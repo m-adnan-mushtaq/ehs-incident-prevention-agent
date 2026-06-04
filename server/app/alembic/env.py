@@ -7,7 +7,7 @@ from sqlalchemy import engine_from_config, pool
 from app.core.config_loader import settings
 from app.db.database import Base
 
-import app.db.models  # noqa: F401
+import app.db.models
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 if str(PROJECT_ROOT) not in sys.path:

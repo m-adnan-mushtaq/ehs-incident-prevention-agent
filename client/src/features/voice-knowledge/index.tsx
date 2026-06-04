@@ -1,11 +1,12 @@
 import Container from "@/components/layout/container";
+import { PageHeader } from "@/components/shared/safety-ui";
 import { Button } from "@/components/ui/button";
 import { CACHE_KEYS } from "@/constants/common";
 import { getUserRole } from "@/lib/user-role";
 import { useAuthStore } from "@/store/auth";
 import { sitesService } from "@/services";
 import { useQuery } from "@tanstack/react-query";
-import { Plus } from "lucide-react";
+import { Mic, Plus } from "lucide-react";
 import { useMemo, useState } from "react";
 import { VoiceKnowledgeCreateModal } from "./components/VoiceKnowledgeCreateModal";
 import { VoiceKnowledgeDetailModal } from "./components/VoiceKnowledgeDetailModal";
@@ -35,21 +36,18 @@ const VoiceKnowledgePage = () => {
 
   return (
     <Container className="pb-16 text-slate-900">
-      <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-        <div>
-          <h1 className="text-2xl font-semibold text-slate-950">
-            Voice Knowledge Notes
-          </h1>
-          <p className="mt-1 max-w-2xl text-sm text-slate-500">
-            Capture field observations and safety expertise as structured
-            knowledge for your sites.
-          </p>
-        </div>
-        <Button className="shrink-0" onClick={() => setCreateOpen(true)}>
-          <Plus className="h-4 w-4" />
-          New safety note
-        </Button>
-      </div>
+      <PageHeader
+        eyebrow="SME-reviewed field expertise"
+        title="Voice Knowledge Notes"
+        description="Capture field observations and safety expertise as structured knowledge for your sites."
+        icon={Mic}
+        actions={
+          <Button className="shrink-0" onClick={() => setCreateOpen(true)}>
+            <Plus className="h-4 w-4" />
+            New safety note
+          </Button>
+        }
+      />
 
       <PaginatedList />
 

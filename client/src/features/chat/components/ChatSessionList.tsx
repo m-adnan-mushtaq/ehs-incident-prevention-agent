@@ -30,7 +30,7 @@ export const ChatSessionList = ({
           {modeLabel ? `${modeLabel} chats` : "Recent chats"}
         </p>
       </div>
-      <Button className="w-full" onClick={onNewChat}>
+      <Button className="w-full bg-blue-600 hover:bg-blue-700" onClick={onNewChat}>
         <Plus className="h-4 w-4" />
         New chat
       </Button>
@@ -54,8 +54,8 @@ export const ChatSessionList = ({
             className={cn(
               "w-full rounded-md px-3 py-2.5 text-left transition",
               activeId === s.id
-                ? "bg-blue-50 text-blue-900 ring-1 ring-blue-200"
-                : "text-slate-700 hover:bg-slate-50"
+                ? "border border-blue-200 bg-blue-50 text-blue-900 shadow-sm"
+                : "border border-transparent text-slate-700 hover:border-slate-200 hover:bg-slate-50"
             )}
           >
             <p className="truncate text-sm font-medium">

@@ -27,14 +27,19 @@ export const NavMain = ({
 }) => {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
+  const activeClasses =
+    "bg-sidebar-primary text-sidebar-primary-foreground shadow-sm hover:!bg-sidebar-primary hover:!text-sidebar-primary-foreground";
+  const idleClasses =
+    "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground";
+
   return (
     <SidebarGroup>
       {showLabel && (
-        <SidebarGroupLabel className="text-xs uppercase tracking-wide text-slate-500">
+        <SidebarGroupLabel className="px-2 text-xs uppercase tracking-wide text-safety-muted">
           Modules
         </SidebarGroupLabel>
       )}
-      <SidebarMenu>
+      <SidebarMenu className="gap-1">
         {items.map((item) => {
           const isActive = pathname === item.url;
           const hasChildren = Boolean(item.items?.length);
@@ -53,9 +58,9 @@ export const NavMain = ({
                     <CollapsibleTrigger asChild>
                       <SidebarMenuButton
                         className={cn(
-                          "text-slate-600 hover:bg-blue-50 hover:text-blue-700",
-                          (isActive || isActiveChild) &&
-                            "bg-blue-50 text-blue-700"
+                          "h-10 rounded-lg",
+                          idleClasses,
+                          (isActive || isActiveChild) && activeClasses
                         )}
                         tooltip={item.title}
                       >
@@ -75,7 +80,7 @@ export const NavMain = ({
                                 to={subItem.url}
                                 className={cn(
                                   pathname === subItem.url &&
-                                    "bg-blue-50 text-blue-700"
+                                    "bg-sidebar-accent text-sidebar-accent-foreground"
                                 )}
                               >
                                 {subItem.title}
@@ -91,8 +96,9 @@ export const NavMain = ({
                     <Link
                       to={item.url}
                       className={cn(
-                        "text-slate-600 hover:bg-blue-50 hover:text-blue-700",
-                        isActive && "bg-blue-50 text-blue-700"
+                        "h-10 rounded-lg",
+                        idleClasses,
+                        isActive && activeClasses
                       )}
                     >
                       {item.icon && <item.icon className="h-4 w-4" />}

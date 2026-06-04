@@ -1,12 +1,13 @@
 import withPaginatedQuery, {
   PaginationWrapperProps,
 } from "@/components/hoc/withPaginatedQuery";
+import { EmptyState, LoadingState, SectionCard } from "@/components/shared/safety-ui";
 import { CACHE_KEYS } from "@/constants/common";
 import { knowledgeObjectsService } from "@/services";
 import type { IKnowledgeObject } from "@/types/knowledge-object";
 import { Button } from "@/components/ui/button";
 import { ThemeInput } from "@/components/form/ThemeInput";
-import { Loader2, Search } from "lucide-react";
+import { Mic, Search } from "lucide-react";
 import { VOICE_SOURCE_TYPE } from "../utils/voiceKnowledge.constants";
 import { VoiceKnowledgeCard } from "./VoiceKnowledgeCard";
 
@@ -27,12 +28,12 @@ export const VoiceKnowledgeListContent = ({
   const pageCount = Math.max(1, Math.ceil(totalRecords / paginationModel.pageSize));
 
   return (
-  <section className="space-y-4">
+  <SectionCard
+    title="Previous voice notes"
+    description={`${totalRecords} total field knowledge notes`}
+    contentClassName="space-y-4"
+  >
     <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-      <div>
-        <h2 className="text-lg font-semibold text-slate-950">Previous voice notes</h2>
-        <span className="text-sm text-slate-500">{totalRecords} total</span>
-      </div>
       <div className="w-full sm:max-w-80">
         <ThemeInput
           startIcon={Search}
@@ -44,15 +45,13 @@ export const VoiceKnowledgeListContent = ({
       </div>
     </div>
     {isLoading ? (
-      <div className="flex items-center justify-center rounded-lg border border-slate-200 bg-white py-16 text-slate-500">
-        <Loader2 className="h-6 w-6 animate-spin text-blue-600" />
-        <span className="ml-2">Loading voice notes...</span>
-      </div>
+      <LoadingState label="Loading voice notes..." />
     ) : data.length === 0 ? (
-      <p className="rounded-lg border border-dashed border-slate-300 bg-white py-12 text-center text-sm text-slate-500">
-        No voice knowledge notes yet. Record a safety note to begin building trusted
-        field knowledge.
-      </p>
+      <EmptyState
+        title="No voice knowledge notes yet"
+        description="Record a safety note to begin building trusted field knowledge."
+        icon={Mic}
+      />
     ) : (
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         {data.map((note) => (
@@ -89,7 +88,7 @@ export const VoiceKnowledgeListContent = ({
         </Button>
       </div>
     )}
-  </section>
+  </SectionCard>
   );
 };
 

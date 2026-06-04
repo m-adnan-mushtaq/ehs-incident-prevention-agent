@@ -7,8 +7,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { StatusBadge } from "@/components/shared/status-badge";
-import { MEDIA_BASE_URL } from "@/constants/common";
 import { formatDateTime, toTitleCase } from "@/helpers/common";
+import { getDocumentUrl } from "@/helpers/media";
 import type { IDocument } from "@/types/document";
 import { ExternalLink, FileText, Loader2 } from "lucide-react";
 import type { ReactNode } from "react";
@@ -18,15 +18,6 @@ type Props = {
   document: IDocument | null;
   isLoading?: boolean;
   onClose: () => void;
-};
-
-const joinUrl = (base: string, path: string) =>
-  `${base.replace(/\/$/, "")}/${path.replace(/^\//, "")}`;
-
-const getDocumentUrl = (document?: IDocument | null) => {
-  if (!document?.file_url) return null;
-  if (/^https?:\/\//i.test(document.file_url)) return document.file_url;
-  return joinUrl(MEDIA_BASE_URL, document.file_url);
 };
 
 const isPdf = (document?: IDocument | null) => {

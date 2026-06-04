@@ -1,6 +1,7 @@
 import Container from "@/components/layout/container";
 import DataTable from "@/components/shared/data-table";
 import ConfirmationDialog from "@/components/shared/confirmation-dialog";
+import { PageHeader, SectionCard } from "@/components/shared/safety-ui";
 import withPaginatedQuery, {
   PaginationWrapperProps,
 } from "@/components/hoc/withPaginatedQuery";
@@ -9,7 +10,7 @@ import { MODAL_TYPE, useModal } from "@/hooks/use-modal";
 import { authService, rolesService } from "@/services";
 import type { ICurrentUser } from "@/types/user";
 import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
+import { Plus, Users } from "lucide-react";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useColumns } from "./hooks/useColumns";
@@ -56,23 +57,27 @@ const UsersPage = ({
 
   return (
     <Container className="pb-10 text-slate-900">
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-2xl font-semibold text-slate-950">Field Teams</h2>
-          <p className="text-sm text-slate-500">
-            Manage administrators, safety managers, and field workers.
-          </p>
-        </div>
-        <Button
-          onClick={() => {
-            setSelectedUser(undefined);
-            modalStateHandler(MODAL_TYPE.CREATE, true);
-          }}
-        >
-          <Plus className="h-4 w-4" /> Add user
-        </Button>
-      </div>
-      <div className="rounded-lg border border-slate-200 bg-white p-3 shadow-sm">
+      <PageHeader
+        eyebrow="People and roles"
+        title="Field Teams"
+        description="Manage administrators, safety managers, SMEs, and field workers who use Safety Operations AI."
+        icon={Users}
+        actions={
+          <Button
+            onClick={() => {
+              setSelectedUser(undefined);
+              modalStateHandler(MODAL_TYPE.CREATE, true);
+            }}
+          >
+            <Plus className="h-4 w-4" /> Add user
+          </Button>
+        }
+      />
+      <SectionCard
+        title="Team directory"
+        description="Role, status, and access controls for the current tenant."
+        contentClassName="p-3"
+      >
         <DataTable
           columns={columns as never}
           data={data}
@@ -87,7 +92,7 @@ const UsersPage = ({
           search={search}
           onSearch={handleSearch}
         />
-      </div>
+      </SectionCard>
       <UserDialog
         open={dialogOpen}
         modalType={dialogType}

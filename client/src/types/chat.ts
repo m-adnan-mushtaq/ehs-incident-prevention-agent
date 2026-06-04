@@ -23,6 +23,10 @@ export interface IChatMessage {
   message_type: string;
   confidence_score?: number | null;
   rag_metadata?: Record<string, unknown> | null;
+  image_key?: string | null;
+  image_file_name?: string | null;
+  image_content_type?: string | null;
+  image_size_bytes?: number | null;
   created_at?: string;
   updated_at?: string;
 }
@@ -86,6 +90,7 @@ export interface IChatFinalResponse {
   user_message_id: string;
   assistant_message_id: string;
   mode: string;
+  response_profile?: string | null;
   answer: string;
   card: Record<string, unknown>;
   citations: ISourceCitation[];

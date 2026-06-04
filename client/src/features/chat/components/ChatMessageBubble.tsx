@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { getChatImageUrl } from "@/helpers/media";
 import type { IChatMessage, ISourceCitation } from "@/types/chat";
 import {
   buildCardFromMetadata,
@@ -21,6 +22,8 @@ export const ChatMessageBubble = ({
   const isUser = message.role === "user";
   const meta = message.rag_metadata ?? {};
   const mode = (meta.mode as string) ?? undefined;
+  const responseProfile = (meta.response_profile as string) ?? undefined;
+  const chatImageUrl = isUser ? getChatImageUrl(message.image_key) : null;
 
   const resolvedCard = !isUser
     ? buildCardFromMetadata(
@@ -31,7 +34,8 @@ export const ChatMessageBubble = ({
       )
     : null;
 
-  const showStructured = resolvedCard !== null;
+  const showStructured =
+    resolvedCard !== null && responseProfile !== "small_talk";
 
   return (
     <div
@@ -45,6 +49,14 @@ export const ChatMessageBubble = ({
       >
         {isUser ? (
           <div className="rounded-2xl rounded-br-md bg-blue-600 px-4 py-3 text-white shadow-sm">
+            {chatImageUrl && (
+              <img
+                src={chatImageUrl}
+                alt={message.image_file_name || "Uploaded safety image"}
+                className="mb-3 max-h-80 w-full rounded-lg object-contain"
+                loading="lazy"
+              />
+            )}
             <p className="whitespace-pre-wrap text-sm leading-relaxed">
               {message.content}
             </p>

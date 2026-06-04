@@ -1,6 +1,7 @@
 import Container from "@/components/layout/container";
 import DataTable from "@/components/shared/data-table";
 import ConfirmationDialog from "@/components/shared/confirmation-dialog";
+import { PageHeader, SectionCard } from "@/components/shared/safety-ui";
 import withPaginatedQuery, {
   PaginationWrapperProps,
 } from "@/components/hoc/withPaginatedQuery";
@@ -9,7 +10,7 @@ import { MODAL_TYPE, useModal } from "@/hooks/use-modal";
 import { sitesService } from "@/services";
 import type { ICreateSitePayload, ISite } from "@/types/site";
 import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
+import { Building2, Plus } from "lucide-react";
 import { useState } from "react";
 import { useColumns } from "./hooks/useColumns";
 import { SiteDialog } from "./components/SiteDialog";
@@ -49,23 +50,27 @@ const SitesPage = ({
 
   return (
     <Container className="pb-10 text-slate-900">
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-2xl font-semibold text-slate-950">Sites</h2>
-          <p className="text-sm text-slate-500">
-            Operational locations for field teams and site-scoped documents.
-          </p>
-        </div>
-        <Button
-          onClick={() => {
-            setSelectedSite(undefined);
-            modalStateHandler(MODAL_TYPE.CREATE, true);
-          }}
-        >
-          <Plus className="h-4 w-4" /> Add site
-        </Button>
-      </div>
-      <div className="rounded-lg border border-slate-200 bg-white p-3 shadow-sm">
+      <PageHeader
+        eyebrow="Site context"
+        title="Sites"
+        description="Operational locations for field teams, incidents, and site-scoped safety documents."
+        icon={Building2}
+        actions={
+          <Button
+            onClick={() => {
+              setSelectedSite(undefined);
+              modalStateHandler(MODAL_TYPE.CREATE, true);
+            }}
+          >
+            <Plus className="h-4 w-4" /> Add site
+          </Button>
+        }
+      />
+      <SectionCard
+        title="Operational locations"
+        description="Active and suspended sites used for scoped guidance."
+        contentClassName="p-3"
+      >
         <DataTable
           columns={columns as never}
           data={data}
@@ -80,7 +85,7 @@ const SitesPage = ({
           search={search}
           onSearch={handleSearch}
         />
-      </div>
+      </SectionCard>
       <SiteDialog
         open={dialogOpen}
         site={selectedSite}

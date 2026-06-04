@@ -128,7 +128,7 @@ function DataTable<TData, TValue>({
       return Array.from({ length: pageCount }, (_, i) => i + 1);
     }
 
-    let pages: (number | string)[] = [];
+    const pages: (number | string)[] = [];
 
     // Always show first page
     pages.push(1);
@@ -153,8 +153,8 @@ function DataTable<TData, TValue>({
 
   return (
     <div className="relative w-full overflow-auto">
-      <div className="flex items-center justify-between">
-        <div className="max-w-80 p-1">
+      <div className="flex flex-col gap-3 p-1 sm:flex-row sm:items-center sm:justify-between">
+        <div className="w-full sm:max-w-80">
           <ThemeInput
             startIcon={Search}
             className="rounded-md border-slate-200 bg-white"
@@ -169,7 +169,7 @@ function DataTable<TData, TValue>({
         className={cn(
           "w-full mb-1",
           "rounded-lg",
-          "border-separate border-spacing-y-4",
+          "border-separate border-spacing-y-2",
         )}
       >
         <TableHeader>
@@ -185,7 +185,7 @@ function DataTable<TData, TValue>({
                   <TableHead
                     key={header.id}
                     className={cn(
-                      "cursor-pointer select-none bg-white text-slate-600",
+                      "cursor-pointer select-none bg-slate-50 text-xs uppercase tracking-wide text-slate-500",
                     )}
                     onClick={
                       header.column.getCanSort()
@@ -266,12 +266,12 @@ function DataTable<TData, TValue>({
                             : {}),
                         }}
                         className={cn(
-                          "mb-2 bg-white text-slate-700",
+                          "border-y border-slate-100 bg-white text-slate-700 shadow-sm",
 
                           cellIndex === 0
-                            ? "rounded-l-lg"
+                            ? "rounded-l-lg border-l"
                             : cellIndex === columns.length - 1
-                              ? "rounded-r-lg"
+                              ? "rounded-r-lg border-r"
                               : "",
                         )}
                         key={cell.id}
@@ -288,9 +288,9 @@ function DataTable<TData, TValue>({
           ) : (
             <TableRow>
               <TableCell colSpan={columns.length} className="text-center">
-                <div className="my-4 flex flex-col items-center justify-center text-slate-400">
-                  <Inbox size={40} className=" text-gray-300" />
-                  <p className="font-semibold text-sm mt-2">
+                <div className="my-6 flex flex-col items-center justify-center rounded-lg border border-dashed border-slate-300 bg-slate-50 py-10 text-slate-400">
+                  <Inbox size={40} className="text-slate-300" />
+                  <p className="mt-2 max-w-lg text-sm font-semibold text-slate-500">
                     {loading ? "Loading..." : emptyPlaceholder}
                   </p>
                 </div>

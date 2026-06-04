@@ -26,8 +26,10 @@ const LoginPage = () => {
   return (
     <>
       <CardHeader className="px-0 pb-2 text-center">
-        <CardTitle className="text-xl text-slate-950">Sign in</CardTitle>
-        <CardDescription className="text-slate-500">
+        <CardTitle className="text-xl text-safety-ink">
+          Sign in to Safety Operations AI
+        </CardTitle>
+        <CardDescription className="text-safety-muted">
           Access your safety operations workspace
         </CardDescription>
       </CardHeader>

@@ -1,18 +1,19 @@
 import { Badge } from "@/components/ui/badge";
+import { RiskBadge } from "@/components/shared/safety-ui";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import { VoiceKnowledgeRiskBadge } from "@/features/voice-knowledge/components/VoiceKnowledgeRiskBadge";
 import type { ISafetyAnswerCard } from "@/types/chat";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, ShieldCheck } from "lucide-react";
 import { useState } from "react";
 import {
   formatConfidence,
   normalizeSafetyCard,
   toStringList,
 } from "../utils/chat-formatters";
+import { CHAT_MODE_LABELS } from "../utils/chat.constants";
 import { ChatMarkdownPreview } from "./ChatMarkdownPreview";
 import { ChatSources } from "./ChatSources";
 
@@ -70,61 +71,67 @@ const CollapsibleList = ({
 
 export const ChatAnswerCard = ({ card, answer, mode }: Props) => {
   const normalized = normalizeSafetyCard(card, answer);
+  const modeLabel = mode ? CHAT_MODE_LABELS[mode] ?? mode.replace(/_/g, " ") : "Safety Answer";
 
   return (
-    <div className="space-y-3 rounded-lg border border-slate-200 bg-white p-4 shadow-sm">
-      <div className="flex flex-wrap items-center gap-2">
-        <VoiceKnowledgeRiskBadge risk={normalized.risk_level} />
-        <span className="text-xs text-slate-500">
-          Confidence {formatConfidence(normalized.confidence_score)}
-        </span>
-        {mode && (
-          <Badge variant="secondary" className="text-[10px]">
-            {mode.replace(/_/g, " ")}
+    <div className="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm">
+      <div className="border-b border-slate-200 bg-slate-50 px-4 py-3">
+        <div className="flex flex-wrap items-center gap-2">
+          <div className="flex h-8 w-8 items-center justify-center rounded-md bg-blue-600 text-white">
+            <ShieldCheck className="h-4 w-4" aria-hidden />
+          </div>
+          <div className="mr-auto">
+            <p className="text-sm font-semibold text-slate-950">
+              {normalized.task || modeLabel}
+            </p>
+            <p className="text-xs text-slate-500">Safety guidance card</p>
+          </div>
+          <RiskBadge risk={normalized.risk_level} />
+          <Badge variant="outline" className="border-slate-200 bg-white text-slate-600">
+            Confidence {formatConfidence(normalized.confidence_score)}
           </Badge>
-        )}
-      </div>
-
-      {normalized.task && (
-        <div className="rounded-md border border-blue-200 bg-blue-50/60 px-3 py-1.5">
-          <p className="text-[10px] font-semibold uppercase text-blue-800">Task</p>
-          <p className="text-xs text-slate-900">{normalized.task}</p>
+          {mode && (
+            <Badge variant="secondary" className="capitalize">
+              {modeLabel}
+            </Badge>
+          )}
         </div>
-      )}
-
-      <ChatMarkdownPreview
-        source={normalized.answer || answer}
-        className="text-sm leading-relaxed text-slate-800"
-      />
-
-      {normalized.note && (
+      </div>
+      <div className="space-y-3 p-4">
         <ChatMarkdownPreview
-          source={normalized.note}
-          className="text-[11px] italic text-slate-500"
+          source={normalized.answer || answer}
+          className="text-sm leading-relaxed text-slate-800"
         />
-      )}
 
-      <CollapsibleList title="Must verify" items={normalized.must_verify} variant="info" />
-      <CollapsibleList title="Required PPE" items={normalized.required_ppe} />
-      <CollapsibleList
-        title="Stop work triggers"
-        items={normalized.stop_work_triggers}
-        variant="warning"
-      />
-      <CollapsibleList
-        title="Common mistakes"
-        items={normalized.common_mistakes}
-        variant="warning"
-      />
-      <CollapsibleList
-        title="Similar incidents"
-        items={normalized.similar_incidents}
-        variant="warning"
-      />
-      <CollapsibleList title="Steps" items={normalized.steps} />
-      <CollapsibleList title="Warnings" items={normalized.warnings} variant="warning" />
+        {normalized.note && (
+          <ChatMarkdownPreview
+            source={normalized.note}
+            className="text-[11px] italic text-slate-500"
+          />
+        )}
 
-      <ChatSources citations={normalized.citations} />
+        <CollapsibleList title="Must verify" items={normalized.must_verify} variant="info" />
+        <CollapsibleList title="Required PPE" items={normalized.required_ppe} />
+        <CollapsibleList
+          title="Stop-work triggers"
+          items={normalized.stop_work_triggers}
+          variant="warning"
+        />
+        <CollapsibleList
+          title="Common mistakes"
+          items={normalized.common_mistakes}
+          variant="warning"
+        />
+        <CollapsibleList
+          title="Similar incidents"
+          items={normalized.similar_incidents}
+          variant="warning"
+        />
+        <CollapsibleList title="Required steps" items={normalized.steps} />
+        <CollapsibleList title="Warnings" items={normalized.warnings} variant="warning" />
+
+        <ChatSources citations={normalized.citations} />
+      </div>
     </div>
   );
 };

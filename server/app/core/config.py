@@ -18,9 +18,9 @@ class Settings(BaseSettings):
     POSTGRESQL_DATABASE: str
 
     FRONTEND_URL: str
-    SMTP_USER: str|None = None
-    SMTP_PASSWORD: str|None = None
-    SMTP_HOST: str 
+    SMTP_USER: str | None = None
+    SMTP_PASSWORD: str | None = None
+    SMTP_HOST: str
     SMTP_PORT: int
 
     JWT_SECRET_KEY: str = "change-me-in-production"
@@ -41,7 +41,7 @@ class Settings(BaseSettings):
     OPENROUTER_BASE_URL: str = "https://openrouter.ai/api/v1"
     GEMINI_API_KEY: str | None = None
     GOOGLE_API_KEY: str | None = None
-    GEMINI_VISION_MODEL: str = "gemini-1.5-flash"
+    GEMINI_VISION_MODEL: str = "gemini-2.5-flash"
 
     VOYAGE_API_KEY: str
     VOYAGE_EMBEDDING_MODEL: str = "voyage-3"

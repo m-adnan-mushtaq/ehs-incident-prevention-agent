@@ -32,10 +32,10 @@ const AdminSignupPage = () => {
   return (
     <>
       <CardHeader className="px-0 pb-2 text-center">
-        <CardTitle className="text-xl text-slate-950">
+        <CardTitle className="text-xl text-safety-ink">
           Organization onboarding
         </CardTitle>
-        <CardDescription className="text-slate-500">
+        <CardDescription className="text-safety-muted">
           Register your tenant and administrator account
         </CardDescription>
       </CardHeader>
@@ -45,11 +45,11 @@ const AdminSignupPage = () => {
             <AdminSignupForm control={form.control} isPending={isPending} />
           </form>
         </Form>
-        <p className="mt-6 text-center text-sm text-slate-500">
+        <p className="mt-6 text-center text-sm text-safety-muted">
           Already have an account?{" "}
           <Link
             to="/auth/login"
-            className="font-medium text-blue-700 hover:text-blue-800"
+            className="font-medium text-safety-brand hover:text-blue-700"
           >
             Sign in
           </Link>

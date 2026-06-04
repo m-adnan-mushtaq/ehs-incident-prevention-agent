@@ -1,7 +1,7 @@
 import uuid
 from decimal import Decimal
 
-from sqlalchemy import ForeignKey, Index, Numeric, String, Text
+from sqlalchemy import ForeignKey, Index, Integer, Numeric, String, Text
 from sqlalchemy.dialects.postgresql import JSONB, UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
@@ -83,5 +83,18 @@ class ChatMessage(BaseTable, SoftDeleteMixin, TenantMixin):
         nullable=True,
     )
     rag_metadata: Mapped[dict | None] = mapped_column(JSONB, nullable=True)
+    image_key: Mapped[str | None] = mapped_column(Text, nullable=True)
+    image_file_name: Mapped[str | None] = mapped_column(
+        String(255),
+        nullable=True,
+    )
+    image_content_type: Mapped[str | None] = mapped_column(
+        String(100),
+        nullable=True,
+    )
+    image_size_kb: Mapped[int | None] = mapped_column(
+        Integer,
+        nullable=True,
+    )
 
     session = relationship("ChatSession", back_populates="messages")

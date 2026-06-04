@@ -21,7 +21,7 @@ export const CHAT_MODES: {
   {
     value: "normal_chat",
     label: "General Safety",
-    description: "Search official guidance and expert knowledge.",
+    description: "Search approved guidance and expert knowledge.",
   },
   {
     value: "incident_prevention",
@@ -66,12 +66,20 @@ export const CHAT_QUICK_PROMPTS: Record<TChatMode, string[]> = {
 };
 
 export const TOOL_STATUS_LABELS: Record<string, string> = {
-  received: "Processing your safety request...",
-  image_analysis_started: "Analyzing the image...",
+  received: "Classifying request...",
+  image_analysis_started: "Analyzing image...",
   image_analysis_completed: "Image analysis complete",
-  retrieval_started: "Checking official safety guidance...",
-  retrieval_completed: "Sources reviewed",
-  completed: "Answer prepared",
+  image_upload_started: "Saving image...",
+  image_upload_completed: "Image saved",
+  intent_classified: "Classifying request...",
+  retrieval_started: "Finding approved safety guidance...",
+  retrieval_completed: "Safety guidance reviewed",
+  similar_incidents_started: "Checking incident history...",
+  similar_incidents_completed: "Incident history checked",
+  answer_generation_started: "Preparing safety brief...",
+  answer_generation_completed: "Safety brief drafted",
+  saving_answer: "Saving answer...",
+  completed: "Answer ready",
   failed: "Safety check could not complete",
 };
 

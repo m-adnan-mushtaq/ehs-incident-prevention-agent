@@ -25,9 +25,9 @@ export const ChatHeader = ({
   onNewChat,
   socketConnected,
 }: Props) => (
-  <header className="flex h-14 shrink-0 items-center justify-between border-b border-slate-200 bg-white px-4">
+  <header className="flex h-16 shrink-0 items-center justify-between border-b border-slate-200 bg-white px-4">
     <div className="flex min-w-0 items-center gap-2">
-      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-blue-700">
+      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-blue-50 text-blue-700">
         <Shield className="h-5 w-5" aria-hidden />
       </div>
       <div className="min-w-0">
@@ -35,7 +35,7 @@ export const ChatHeader = ({
           {session?.title || "Safety Assistant"}
         </h1>
         <p className="truncate text-xs text-slate-500">
-          {formatChatMode(session?.mode)}
+          Safety Operations AI · {formatChatMode(session?.mode)}
           {!socketConnected && activeSessionId && " · Connecting…"}
         </p>
       </div>

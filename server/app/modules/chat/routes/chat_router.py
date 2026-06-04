@@ -1,3 +1,5 @@
+import logging
+from time import perf_counter
 from typing import Optional
 
 from fastapi import APIRouter, Depends, File, Form, UploadFile, status
@@ -14,6 +16,7 @@ chat_router = APIRouter(
     prefix="/chat",
     tags=["Chat"],
 )
+logger = logging.getLogger(__name__)
 
 
 @chat_router.post("/sessions")
@@ -65,6 +68,15 @@ async def submit_chat_message_route(
         message=message,
         image=image,
     )
+    commit_start = perf_counter()
     await db.commit()
+    logger.info(
+        "chat_db_commit",
+        extra={
+            "session_id": session_id,
+            "tenant_id": str(current_user.tenant_id),
+            "user_id": str(current_user.id),
+            "db_commit_ms": round((perf_counter() - commit_start) * 1000, 2),
+        },
+    )
     return format_response(result, status.HTTP_200_OK)
-

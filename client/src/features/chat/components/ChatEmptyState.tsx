@@ -1,5 +1,5 @@
 import type { TChatMode } from "@/types/chat";
-import { Shield } from "lucide-react";
+import { ShieldCheck } from "lucide-react";
 import { CHAT_MODE_LABELS, CHAT_QUICK_PROMPTS } from "../utils/chat.constants";
 
 type Props = {
@@ -22,9 +22,9 @@ export const ChatEmptyState = ({
   const prompts = CHAT_QUICK_PROMPTS[mode] ?? CHAT_QUICK_PROMPTS.incident_prevention;
 
   return (
-    <div className="mx-auto flex min-h-full max-w-xl flex-col items-center justify-center px-6 py-12 text-center">
-      <div className="flex h-14 w-14 items-center justify-center rounded-full bg-blue-50 text-blue-700">
-        <Shield className="h-7 w-7" />
+    <div className="mx-auto flex min-h-full max-w-2xl flex-col items-center justify-center px-6 py-12 text-center">
+      <div className="flex h-14 w-14 items-center justify-center rounded-md bg-blue-50 text-blue-700">
+        <ShieldCheck className="h-7 w-7" />
       </div>
       <h2 className="mt-6 text-xl font-semibold text-slate-900">
         {CHAT_MODE_LABELS[mode] ?? "Start a safety check"}
@@ -38,7 +38,7 @@ export const ChatEmptyState = ({
             key={prompt}
             type="button"
             onClick={() => onSelectPrompt(prompt)}
-            className="rounded-lg border border-slate-200 bg-white px-4 py-3 text-left text-sm text-slate-700 shadow-sm transition hover:border-blue-200 hover:bg-blue-50/50"
+            className="rounded-lg border border-slate-200 bg-white px-4 py-3 text-left text-sm text-slate-700 shadow-sm transition hover:border-blue-300 hover:bg-blue-50/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/40"
           >
             {prompt}
           </button>
