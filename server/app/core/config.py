@@ -43,8 +43,7 @@ class Settings(BaseSettings):
     GOOGLE_API_KEY: str | None = None
     GEMINI_VISION_MODEL: str = "gemini-2.5-flash"
 
-    VOYAGE_API_KEY: str
-    VOYAGE_EMBEDDING_MODEL: str = "voyage-3"
+    GOOGLE_EMBEDDING_MODEL: str = "gemini-embedding-2"
 
     CELERY_BROKER_URL: str = "redis://localhost:6379/0"
     CELERY_RESULT_BACKEND: str | None = None

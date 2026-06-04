@@ -58,5 +58,3 @@ app.mount("/socket.io/", socket_manager.app)
 def read_root():
     return {"status": "ok"}
 
-
-print(f"VOYAGE_API_KEY: {settings.VOYAGE_API_KEY}")
