@@ -19,7 +19,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-RUN chmod +x start.sh
+RUN chmod +x start.sh start_worker.sh
 
 EXPOSE 8000
 
